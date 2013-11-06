@@ -1,8 +1,6 @@
 CodeEval
 ========
 
-My CodeEval solutions.
+My CodeEval solutions. Do not read my solutions if you are a CodeEval participant!
 
-Do not read my solutions if you are a CodeEval participant!
-
-Check out my public profile: https://www.codeeval.com/public/d9cda12597e94994b0b63efd4797e598d857ecf2/
+If you're interested, check out my CodeEval public profile: http://goo.gl/Q6JZeY
