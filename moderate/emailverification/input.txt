@@ -1,0 +1,11 @@
+"very.unusual.@.unusual.com"@example.com
+foo@bar.com
+good123@bad.com
+test+test@example.com
+disposable.style.email.with+156@example.com
+disposable.style.email.with+symbol@example.com
+admin#codeeval.com
+this is not an email id
+a"b(c)d,e:f;g<h>i[j\k]l@example.com
+A@b@c@example.com
+just"not"right@example.com
