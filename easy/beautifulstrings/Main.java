@@ -79,7 +79,9 @@ public class Main
         /**
          * Note: this comparator imposes orderings that are inconsistent with equals.
          */
-        public int compare(Character a, Character b) {
+        @Override
+        public int compare(Character a, Character b)
+        {
             // N.B. Returning 0 would merge keys.
             if (_base.get(a) >= _base.get(b)) {
                 return -1;
