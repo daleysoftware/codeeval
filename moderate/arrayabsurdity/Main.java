@@ -24,8 +24,8 @@ public class Main
             stringArray = stringArray[1].trim().split(",");
 
             int sum = 0;
-            for (int i = 0; i < stringArray.length; i++) {
-                sum += Integer.parseInt(stringArray[i]);
+            for (String s : stringArray) {
+                sum += Integer.parseInt(s);
             }
 
             int expectedSumLessDuplicate = (N-1)*(N-2)/2;
