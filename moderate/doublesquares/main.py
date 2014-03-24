@@ -1,8 +1,11 @@
 import sys
 
 def count_double_squares(x):
+    if x == 0:
+        return 1
+
     result = 0
-    for b in range(0, int(x ** 0.5)):
+    for b in range(0, int(x ** 0.5)+1):
         a = int((x - (b ** 2)) ** 0.5)
 
         if a < b:
@@ -13,16 +16,18 @@ def count_double_squares(x):
     return result
 
 test_cases = open(sys.argv[1], 'r')
+first = True
+
 for test in test_cases:
     test = test.strip()
     if len(test) == 0:
         continue
 
-    x = int(test)
+    if first:
+        first = False
+        continue
 
-    if x == 0:
-        print 1
-    else:
-        print count_double_squares(x)
+    x = int(test)
+    print count_double_squares(x)
 
 test_cases.close()
