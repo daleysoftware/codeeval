@@ -34,9 +34,18 @@ public class Main
 
     private static boolean hasMatchingWord(char[][] grid, char[] word)
     {
-        for (int row = 0; row < 4; row++) {
-            for (int col = 0; col < 5; col++) {
-                if (hasMatchingWord(grid, word, 0, row, col)) {
+        boolean[][] used = new boolean[3][4];
+
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 4; col++) {
+                // Reset the boolean used array each time.
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        used[i][j] = false;
+                    }
+                }
+
+                if (hasMatchingWord(grid, used, word, 0, row, col)) {
                     return true;
                 }
             }
@@ -45,17 +54,30 @@ public class Main
         return false;
     }
 
-    private static boolean hasMatchingWord(char[][] grid, char[] word, int index,
-                                           int row, int col)
+    private static boolean hasMatchingWord(char[][] grid, boolean[][] used, char[] word,
+                                           int index, int row, int col)
     {
         if (row < 0 || row == 3 || col < 0 || col == 4) {
             return false;
         }
 
-        return (grid[row][col] == word[index]) && ((index+1 == word.length) ||
-                hasMatchingWord(grid, word, index+1, (row+1), (col)  ) ||
-                hasMatchingWord(grid, word, index+1, (row-1), (col)  ) ||
-                hasMatchingWord(grid, word, index+1, (row)  , (col-1)) ||
-                hasMatchingWord(grid, word, index+1, (row)  , (col+1)));
+        if (used[row][col]) {
+            return false;
+        }
+
+        if (grid[row][col] != word[index]) {
+            return false;
+        }
+
+        used[row][col] = true;
+
+        if (index+1 == word.length) {
+            return true;
+        }
+
+        return hasMatchingWord(grid, used, word, index+1, row+1, col  ) ||
+               hasMatchingWord(grid, used, word, index+1, row-1, col  ) ||
+               hasMatchingWord(grid, used, word, index+1, row  , col-1) ||
+               hasMatchingWord(grid, used, word, index+1, row  , col+1);
     }
 }
