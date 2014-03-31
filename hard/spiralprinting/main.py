@@ -11,57 +11,60 @@ for test in test_cases:
     elements = test.split(";")[2].split(' ')
 
     grid = []
+    visited = []
     for i in range(rows):
         grid.append([])
+        visited.append([])
         for j in range(cols):
             grid[i].append(elements[i * cols + j])
+            visited[i].append(False)
 
-    top = 0
-    right = cols-1
-    bottom = rows-1
-    left = 0
-
+    row = 0
+    col = 0
+    result = [grid[0][0]]
+    visited[0][0] = True
     more_to_do = True
-    current_row = 0
-    current_col = 0
 
-    result = []
+    counter = 0
     while more_to_do:
+        counter += 1
+        if counter > 10:
+            break
+
         more_to_do = False
 
         # Left to right.
-        while current_col < right:
-            result.append(grid[current_row][current_col])
-            current_col += 1
+        while col+1 < cols and not visited[row][col+1]:
+            col += 1
+            result.append(grid[row][col])
+            visited[row][col] = True
             if not more_to_do:
                 more_to_do = True
-        right -= 1
 
          # Top to bottom.
-        while current_row < bottom:
-            result.append(grid[current_row][current_col])
-            current_row += 1
+        while row+1 < rows and not visited[row+1][col]:
+            row += 1
+            result.append(grid[row][col])
+            visited[row][col] = True
             if not more_to_do:
                 more_to_do = True
-        bottom -= 1
 
         # Right to left.
-        while current_col > left:
-            result.append(grid[current_row][current_col])
-            current_col -= 1
+        while col-1 >= 0 and not visited[row][col-1]:
+            col -= 1
+            result.append(grid[row][col])
+            visited[row][col] = True
             if not more_to_do:
                 more_to_do = True
-        left += 1
 
          # Bottom to top.
-        while current_row > top:
-            result.append(grid[current_row][current_col])
-            current_row -= 1
+        while row-1 >= 0 and not visited[row-1][col]:
+            row -= 1
+            result.append(grid[row][col])
+            visited[row][col] = True
             if not more_to_do:
                 more_to_do = True
-        top += 1
 
-    result.append(grid[current_row][current_col])
     print " ".join(result)
 
 test_cases.close()
