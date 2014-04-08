@@ -1,27 +1,35 @@
 import sys
-import itertools
 
-# TODO (MP) need to improve this -- it's too slow.
-def find_longest_chain_length_directed_maybe_cyclic_graph(graph):
-    permutations = itertools.permutations(graph)
+class Node:
+    def __init__(self, value):
+        self.value = value
 
-    longest_chain_length = 0
-    for p in permutations:
-        chain_length = 0
+        self.counts = {}
+        self.nodes = {}
 
-        for i in range(1, len(p)):
-            previous = p[i-1]
-            current = p[i]
+    def add_link(self, node):
+        if node.value in self.nodes:
+            self.counts[node.value] += 1
+        else:
+            self.counts[node.value] = 1
+            self.nodes[node.value] = node
 
-            if previous[1] == current[0]:
-                chain_length += 1
+    def remove_link(self, value):
+        self.counts[value] -= 1
 
-        if chain_length > longest_chain_length:
-            longest_chain_length = chain_length
+    def compute_longest_chain(self):
+        result = 0
 
-    result = 0 if longest_chain_length == 0 else longest_chain_length + 1
-    return result
+        for value in self.counts:
+            count = self.counts[value]
+            node = self.nodes[value]
 
+            if count > 0:
+                self.counts[value] -= 1
+                result = max(result, node.compute_longest_chain() + 1)
+                self.counts[value] += 1
+
+        return result
 
 test_cases = open(sys.argv[1], 'r')
 for test in test_cases:
@@ -29,13 +37,26 @@ for test in test_cases:
     if len(test) == 0:
         continue
 
-    graph = []
+    nodes = {}
     for word in test.split(','):
-        graph.append(word[0] + word[-1])
+        if not word[0] in nodes:
+            nodes[word[0]] = Node(word[0])
+        first = nodes[word[0]]
 
-    result = find_longest_chain_length_directed_maybe_cyclic_graph(graph)
+        if not word[-1] in nodes:
+            nodes[word[-1]] = Node(word[-1])
+        second = nodes[word[-1]]
 
-    if result == 0:
+        first.add_link(second)
+
+    result = 0
+    for value, node in nodes.iteritems():
+        longest_chain = node.compute_longest_chain()
+
+        if longest_chain > result:
+            result = longest_chain
+
+    if result <= 1:
         print 'None'
     else:
         print result
