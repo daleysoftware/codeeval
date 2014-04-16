@@ -127,9 +127,6 @@ class PokerHand:
 
     # Return < 0 if self < other, 0 if self == other, > 0 if self > other.
     def __cmp__(self, other):
-        #print self
-        #print other
-
         def render_result(s_result, o_result):
             if s_result[0] and o_result[0] and s_result[1] != o_result[1]:
                 return True, s_result[1] - o_result[1]
@@ -140,61 +137,51 @@ class PokerHand:
             return False, 0
 
         # Royal flush.
-        #print '--- royal'
         result = render_result(self.is_royal_flush(), other.is_royal_flush())
         if result[0]:
             return result[1]
 
         # Straight flush.
-        #print '--- straight'
         result = render_result(self.is_straight_flush(), other.is_straight_flush())
         if result[0]:
             return result[1]
 
         # Four of a kind.
-        #print '--- four'
         result = render_result(self.is_four_of_a_kind(), other.is_four_of_a_kind())
         if result[0]:
             return result[1]
 
         # Full house.
-        #print '--- full'
         result = render_result(self.is_full_house(), other.is_full_house())
         if result[0]:
             return result[1]
 
         # Flush.
-        #print '--- flush'
         result = render_result(self.is_flush(), other.is_flush())
         if result[0]:
             return result[1]
 
         # Straight.
-        #print '--- straight'
         result = render_result(self.is_straight(), other.is_straight())
         if result[0]:
             return result[1]
 
         # Three of a kind.
-        #print '--- three'
         result = render_result(self.is_three_of_a_kind(), other.is_three_of_a_kind())
         if result[0]:
             return result[1]
 
         # Two pairs.
-        #print '--- two'
         result = render_result(self.is_two_pairs(), other.is_two_pairs())
         if result[0]:
             return result[1]
 
         # One pairs.
-        #print '--- one'
         result = render_result(self.is_one_pair(), other.is_one_pair())
         if result[0]:
             return result[1]
 
         # High card.
-        #print '--- high'
         for c1, c2 in zip(sorted(self.cards, reverse=True), sorted(other.cards, reverse=True)):
             if c1.value != c2.value:
                 return c1.value - c2.value
