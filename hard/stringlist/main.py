@@ -1,5 +1,20 @@
 import sys
-import itertools
+
+def get_all_possible_words(alphabet, length):
+    return get_all_possible_words_impl(alphabet, length, "")
+
+def get_all_possible_words_impl(alphabet, length, prefix):
+    if len(prefix) == length:
+        return [prefix]
+
+    result = []
+    for c in alphabet:
+        r = get_all_possible_words_impl(alphabet, length, prefix + c)
+
+        for i in r:
+            result.append(i)
+
+    return result
 
 test_cases = open(sys.argv[1], 'r')
 for test in test_cases:
@@ -10,17 +25,10 @@ for test in test_cases:
     length = int(test.split(',')[0])
     chars = test.split(',')[1]
 
-    triple_chars = []
+    alphabet = set()
     for c in chars:
-        for i in range(length):
-            triple_chars.append(c)
+        alphabet.add(c)
 
-    result = []
-    for i in itertools.permutations(triple_chars, length):
-        result.append("".join(i))
-
-    result = list(set(result))
-    result.sort()
-    print ",".join(result)
+    print(",".join(sorted(get_all_possible_words(alphabet, length))))
 
 test_cases.close()
