@@ -8,16 +8,16 @@ for test in test_cases:
         continue
 
     pattern = test.split(' ')[0]
-    match = test.split(' ')[1]
+    search = test.split(' ')[1]
 
     regex = ""
     for c in pattern:
         if c == '0':
             regex += "A+"
         else:
-            regex += "(A+|B+)"
+            regex += "[A+|B+]"
 
-    if re.match(regex, match):
+    if re.match(regex, search):
         print 'Yes'
     else:
         print 'No'
