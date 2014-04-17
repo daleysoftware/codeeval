@@ -1,5 +1,0 @@
-just"not"right@example.com
-true
-
-A@b@c@example.com
-true
