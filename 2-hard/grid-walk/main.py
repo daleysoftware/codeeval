@@ -1,37 +1,35 @@
+import collections
 
-def key_for_x_y(x, y):
-    return str(x) + "," + str(y)
+def sum_digits(n):
+    s = 0
+    while n:
+        s += n % 10
+        n /= 10
+    return s
 
-def can_visit(x, y):
-    x = abs(x)
-    y = abs(y)
-
-    value = 0
-
-    for digit in str(x):
-        value += int(digit)
-    for digit in str(y):
-        value += int(digit)
-
+def can_visit(p):
+    value = sum_digits(abs(p[0])) + sum_digits(abs(p[1]))
     return value <= 19
 
-def is_visited(x, y, visited):
-    return key_for_x_y(x, y) in visited
+def is_visited(p, visited):
+    return p in visited
 
-def count_accessible_coordinates(x, y, visited):
-    if not can_visit(x, y) or is_visited(x, y, visited):
-        return 0
+def neighbors(p):
+    x, y = p
+    return [(x+1, y), (x, y+1), (x-1, y), (x, y-1)]
 
-    visited.add(key_for_x_y(x, y))
+def count_accessible_coordinates():
+    visited = {(0, 0)}
+    queue = collections.deque([(0, 0)])
 
-    result = 1
+    while len(queue) > 0:
+        p = queue.pop()
 
-    result += count_accessible_coordinates(x+1, y,   visited)
-    result += count_accessible_coordinates(x,   y+1, visited)
-    result += count_accessible_coordinates(x-1, y,   visited)
-    result += count_accessible_coordinates(x,   y-1, visited)
+        for n in neighbors(p):
+            if not is_visited(n, visited) and can_visit(n):
+                visited.add(n)
+                queue.append(n)
 
-    return result
+    return len(visited)
 
-visited = set()
-print count_accessible_coordinates(0, 0, visited)
+print count_accessible_coordinates()
