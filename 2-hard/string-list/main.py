@@ -1,15 +1,12 @@
 import sys
 
-def get_all_possible_words(alphabet, length):
-    return get_all_possible_words_impl(alphabet, length, "")
-
-def get_all_possible_words_impl(alphabet, length, prefix):
+def get_all_possible_words(alphabet, length, prefix=""):
     if len(prefix) == length:
         return [prefix]
 
     result = []
     for c in alphabet:
-        r = get_all_possible_words_impl(alphabet, length, prefix + c)
+        r = get_all_possible_words(alphabet, length, prefix + c)
 
         for i in r:
             result.append(i)
