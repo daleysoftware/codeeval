@@ -7,20 +7,13 @@ for test in test_cases:
     if len(test) == 0:
         continue
 
-    min_heights = {}
-    max_heights = {}
+    heights = {}
 
-    def note_min(index, min_height):
-        if index in min_heights:
-            min_heights[index] = max(min_heights[index], min_height)
+    def note_height(index, ma):
+        if index in heights:
+            heights[index] = max(heights[index], ma)
         else:
-            min_heights[index] = min_height
-
-    def note_max(index, max_height):
-        if index in max_heights:
-            max_heights[index] = max(max_heights[index], max_height)
-        else:
-            max_heights[index] = max_height
+            heights[index] = ma
 
     for coord in test.split(';'):
         m = re.match("\(([0-9]+),([0-9]+),([0-9]+)\)", coord.strip())
@@ -28,29 +21,24 @@ for test in test_cases:
         h = int(m.group(2))
         r = int(m.group(3))
 
-        note_min(l, 0)
-        note_max(l, h)
-        note_min(r, 0)
-        note_max(r, h)
+        # Going up!
+        note_height(l, h)
+        # Going down!
+        note_height(r, 0)
 
         for i in xrange(l+1, r):
-            note_min(i, h)
-            note_max(i, h)
+            note_height(i, h)
 
     previous_height = 0
     result = []
-    for i in sorted(min_heights.keys()):
-        min_height = min_heights[i]
-        max_height = max_heights[i]
 
-        if max_height > previous_height:
-            previous_height = max_height
+    for i in sorted(heights.keys()):
+        height = heights[i]
+
+        if height != previous_height:
+            previous_height = height
             result.append(str(i))
-            result.append(str(max_height))
-        elif min_height < previous_height:
-            previous_height = min_height
-            result.append(str(i))
-            result.append(str(min_height))
+            result.append(str(height))
 
     print " ".join(result)
 
