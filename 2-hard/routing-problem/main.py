@@ -16,7 +16,8 @@ class Graph:
         self.edges[from_node].append(to_node)
         self.edges[to_node].append(from_node)
 
-def find_paths_using_bfs(graph, current, end, prefix=None, visited=set()):
+# TODO too slow
+def find_all_paths_using_bfs(graph, current, end, prefix=None, visited=set()):
     if prefix is None:
         prefix = []
 
@@ -29,13 +30,27 @@ def find_paths_using_bfs(graph, current, end, prefix=None, visited=set()):
     result_paths = []
 
     for node in graph.edges[current]:
-        paths = find_paths_using_bfs(graph, node, end, prefix + [current], visited)
+        paths = find_all_paths_using_bfs(graph, node, end, prefix + [current], visited)
 
         if len(paths) > 0:
             result_paths.extend(paths)
 
     visited.remove(current)
     return result_paths
+
+# TODO too slow
+def find_all_paths_using_queue(graph, start, end):
+    path  = []
+    paths = []
+    queue = [(start, end, path)]
+    while queue:
+        start, end, path = queue.pop()
+        path = path + [start]
+        if start == end:
+            paths.append(path)
+        for node in set(graph.edges[start]).difference(path):
+            queue.append((node, end, path))
+    return paths
 
 def make_mask(n):
     result = 0xffffffff
@@ -95,7 +110,7 @@ def main():
         start = int(test.split(' ')[0])
         end = int(test.split(' ')[1])
 
-        paths = sorted(find_paths_using_bfs(graph, start, end), key=len)
+        paths = sorted(find_all_paths_using_queue(graph, start, end), key=len)
         if len(paths) == 0:
             print 'No connection'
             continue
