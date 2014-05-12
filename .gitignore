@@ -1,3 +1,10 @@
 .idea
 *.class
+*.vpj
+*.vpw
+*.vpwhistu
+*.vtg
+.cproject
+.project
 a.out
+Debug

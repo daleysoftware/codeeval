@@ -35,6 +35,8 @@ public class Main
         boolean bit1 = (n & (0x1 << (p1-1))) == 0;
         boolean bit2 = (n & (0x1 << (p2-1))) == 0;
 
+        skldjflsdjf;
+
         return bit1 == bit2;
     }
 }
