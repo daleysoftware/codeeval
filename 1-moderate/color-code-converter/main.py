@@ -15,9 +15,9 @@ def hsl_to_rgb(color_code):
     l = float(split[1])/100.0
     s = float(split[2])/100.0
     r, g, b =  colorsys.hls_to_rgb(h, l, s)
-    r = int(r * 255)
-    g = int(g * 255)
-    b = int(b * 255)
+    r = int(round(r * 255, 0))
+    g = int(round(g * 255, 0))
+    b = int(round(b * 255, 0))
     return format_rgb(r, g, b)
 
 def is_hsv(color_code):
