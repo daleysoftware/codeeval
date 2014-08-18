@@ -1,61 +1,49 @@
 import sys
-import copy
 import collections
 
-def distance(s1, s2):
-    if len(s1) < len(s2):
-        return distance(s2, s1)
-    if len(s2) == 0:
-        return len(s1)
-    previous_row = xrange(len(s2) + 1)
-    for i, c1 in enumerate(s1):
-        current_row = [i + 1]
-        for j, c2 in enumerate(s2):
-            insertions = previous_row[j + 1] + 1
-            deletions = current_row[j] + 1
-            substitutions = previous_row[j] + (c1 != c2)
-            current_row.append(min(insertions, deletions, substitutions))
-        previous_row = current_row
-    return previous_row[-1]
+def distance_is_equal_to_one(s1, s2):
+    if abs(len(s1)-len(s2)) > 1:
+        return False
+    elif len(s1) == len(s2):
+        diff_found = False
+        for i in xrange(len(s1)):
+            if s1[i] != s2[i]:
+                if diff_found: return False
+                else: diff_found = True
+        return True
+    else:
+        lng = s1 if len(s1) > len(s2) else s2
+        sht = s1 if len(s1) < len(s2) else s2
+        bumper = 0
+        for i in xrange(len(sht)):
+            if sht[i] != lng[i+bumper]:
+                if bumper > 0: return False
+                else: bumper = 1
+        return True
 
-def count_friends(word, network, counted=None):
-    if counted is None: counted = set()
-    # Return zero if we have already been counted.
-    if word in counted: return 0, counted
-    # Add this word to the counted set.
-    counted.add(word)
-    # Evaluate first friends of this word.
-    first_friends = network[word]
-    total = 0
-    for friend in first_friends:
-        if friend not in counted:
-            t, counted = count_friends(friend, network, counted)
-            total += t+1
-    return total, counted
+def add_word_to_network(word, network):
+    result_set = set()
+    result_set.add(word)
+    for key in network.keys():
+        if word not in network[key] and distance_is_equal_to_one(word, key):
+            network[key].update(result_set)
+            result_set = network[key]
+    network[word] = result_set
 
 def main():
     with open(sys.argv[1], 'r') as fh:
         data = fh.read()
         tests = data.split('END OF INPUT')[0].strip().split('\n')
         words = data.split('END OF INPUT')[1].strip().split('\n')
-    dictionary = words
-    network = collections.defaultdict(list)
-    for i in xrange(len(dictionary)):
-        t1 = dictionary[i]
-        for j in xrange(i+1, len(dictionary)):
-            t2 = dictionary[j]
-            if distance(t1, t2) == 1:
-                network[t1].append(t2)
-                network[t2].append(t1)
-    print network
+    network = collections.defaultdict(set)
+    for word in words: add_word_to_network(word, network)
+    # Go through all the given words and count the number of friends.
     for test in tests:
-        network_deep_copy = copy.deepcopy(network)
-        for i in xrange(len(dictionary)):
-            if distance(test, dictionary[i]) == 1:
-                network_deep_copy[test].append(dictionary[i])
-                network_deep_copy[dictionary[i]].append(test)
-        friends, counted = count_friends(test, network_deep_copy)
-        print friends
+        result = 0
+        for word in words:
+            if distance_is_equal_to_one(test, word):
+                result = len(network[word])-1
+        print result
 
 if __name__ == '__main__':
     main()
