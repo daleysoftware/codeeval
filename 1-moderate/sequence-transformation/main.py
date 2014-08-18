@@ -1,8 +1,5 @@
 import sys
 
-def is_string_all_x(string, x):
-    return len(string) > 0 and len(string.replace(x, '')) == 0
-
 def matches(pattern, match):
     if pattern == '0':
         return 'B' not in match
@@ -14,7 +11,11 @@ def matches(pattern, match):
         raise Exception('pattern to long for matching function')
 
 def check_matching(pattern, match, matching_matrix, row=0, col=0):
+    # We already have a solution.
+    if matching_matrix[-1][-1]: return
+    # Index out of bounds.
     if row >= len(matching_matrix) or col >= len(matching_matrix[row]): return
+    # This element has already been checked.
     if matching_matrix[row][col]: return
     for c in xrange(col, len(match)):
         matching_matrix[row][c] = False
