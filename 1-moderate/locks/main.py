@@ -1,11 +1,11 @@
 import sys
 
 def do_lock_pass(locked):
-    for i in xrange(0, len(locked), 2):
+    for i in xrange(1, len(locked), 2):
         locked[i] = True
 
 def do_flip_pass(locked):
-    for i in xrange(0, len(locked), 3):
+    for i in xrange(2, len(locked), 3):
         locked[i] = not locked[i]
 
 def count_unlocked(locked):
@@ -26,7 +26,7 @@ def main():
             do_lock_pass(locked)
             do_flip_pass(locked)
 
-        locked[-1] = True
+        locked[-1] = not locked[-1]
         print count_unlocked(locked)
 
     test_cases.close()
