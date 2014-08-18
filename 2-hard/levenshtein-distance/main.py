@@ -1,5 +1,6 @@
 import sys
-from collections import defaultdict
+import copy
+import collections
 
 def distance(s1, s2):
     if len(s1) < len(s2):
@@ -18,47 +19,43 @@ def distance(s1, s2):
     return previous_row[-1]
 
 def count_friends(word, network, counted=None):
-    if counted is None:
-        counted = []
-    friends = network[word]
-    total = 1
-    counted.append(word)
-    for friend in friends:
+    if counted is None: counted = set()
+    # Return zero if we have already been counted.
+    if word in counted: return 0, counted
+    # Add this word to the counted set.
+    counted.add(word)
+    # Evaluate first friends of this word.
+    first_friends = network[word]
+    total = 0
+    for friend in first_friends:
         if friend not in counted:
-            counted.append(friend)
             t, counted = count_friends(friend, network, counted)
-            total += t
+            total += t+1
     return total, counted
 
-test_cases = open(sys.argv[1], 'r')
-tests = []
-words = []
-in_tests = True
-for test in test_cases:
-    test = test.strip()
-    if len(test) == 0:
-        continue
-    if test == 'END OF INPUT':
-        in_tests = False
-        continue
-    if in_tests:
-        tests.append(test)
-    else:
-        words.append(test)
+def main():
+    with open(sys.argv[1], 'r') as fh:
+        data = fh.read()
+        tests = data.split('END OF INPUT')[0].strip().split('\n')
+        words = data.split('END OF INPUT')[1].strip().split('\n')
+    dictionary = words
+    network = collections.defaultdict(list)
+    for i in xrange(len(dictionary)):
+        t1 = dictionary[i]
+        for j in xrange(i+1, len(dictionary)):
+            t2 = dictionary[j]
+            if distance(t1, t2) == 1:
+                network[t1].append(t2)
+                network[t2].append(t1)
+    print network
+    for test in tests:
+        network_deep_copy = copy.deepcopy(network)
+        for i in xrange(len(dictionary)):
+            if distance(test, dictionary[i]) == 1:
+                network_deep_copy[test].append(dictionary[i])
+                network_deep_copy[dictionary[i]].append(test)
+        friends, counted = count_friends(test, network_deep_copy)
+        print friends
 
-dictionary = tests + words
-network = defaultdict(list)
-for i in xrange(len(dictionary)):
-    t1 = dictionary[i]
-    network[t1].append(t1)
-    for j in xrange(i+1, len(dictionary)):
-        t2 = dictionary[j]
-        if distance(t1, t2) == 1:
-            network[t1].append(t2)
-            network[t2].append(t1)
-
-for test in tests:
-    friends, counted = count_friends(test, network)
-    print max(0, friends-1)
-
-test_cases.close()
+if __name__ == '__main__':
+    main()

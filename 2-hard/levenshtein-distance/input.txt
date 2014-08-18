@@ -1,11 +1,14 @@
-aaa
-bbbbb
-END OF INPUT
-aa
 a
-bbbbbb
-bbbbba
-bbbbbbb
-bbbb
+bbb
+END OF INPUT
+a
+aa
+aaa
+aaaA
+aaaAA
+aaaAAA
+c
+cc
+ccc
 zzzzzzzzzzzzzzzzzzzzz
 yyyyyyyyyyyyyyyyyyyyy
