@@ -8,7 +8,7 @@ def matches(pattern, match):
         b = 'B' in match
         return not (a and b)
     else:
-        raise Exception('pattern to long for matching function')
+        raise Exception('pattern too long for matching function')
 
 def check_matching(pattern, match, matching_matrix, row=0, col=0):
     # We already have a solution.
