@@ -1,2 +1,5 @@
 a.out: main.cpp
-	@g++ main.cpp -Wc++11-extensions
+	@g++ main.cpp
+
+clean:
+	@rm -f a.out
