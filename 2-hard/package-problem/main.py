@@ -1,40 +1,30 @@
 import sys
 
-class memoized(dict):
-    def __init__(self, func):
-        super(memoized, self).__init__()
-        self.func = func
-    def __call__(self, *args):
-        return self[args]
-    def __missing__(self, key):
-        result = self[key] = self.func(*key)
-        return result
+def compute_total_value_and_weight(used, items):
+    total_value = 0
+    total_weight = 0
+    for i in xrange(len(used)):
+        if used[i]:
+            value, weight = items[i]
+            total_value += value
+            total_weight += weight
+    return total_value, total_weight
 
-def knapsack(items, max_weight):
-    """
-    Solve the knapsack problem by finding the most valuable sub-sequence of
-    `items` subject that weighs no more than `max_weight`.
-    """
-    @memoized
-    def best_value(i, j):
-        if i == 0: return 0
-        value, weight = items[i - 1]
-        if weight > j:
-            return best_value(i - 1, j)
+def compute_best_packaging(max_weight, items, best_value=0, best_weight=float('inf'), best_used=None, prefix=None):
+    if prefix is None: prefix = []
+
+    if len(prefix) == len(items):
+        value, weight = compute_total_value_and_weight(prefix, items)
+
+        if weight < max_weight and (value > best_value or (value == best_value and weight < best_weight)):
+            return value, weight, prefix
         else:
-            return max(best_value(i - 1, j),
-                       best_value(i - 1, j - weight) + value)
+            return best_value, best_weight, best_used
 
-    # TODO need to fix the case where we get an identical value and diff weight.
-    # This effectively finds the best value, but not necessarily the best
-    # weight.
-    j = max_weight
-    result = []
-    for i in xrange(len(items), 0, -1):
-        if best_value(i, j) != best_value(i - 1, j):
-            result.append(i)
-            j -= items[i - 1][1]
-    return best_value(len(items), max_weight), result
+    best_value, best_weight, best_used = compute_best_packaging(max_weight, items, best_value, best_weight, best_used, prefix + [False])
+    best_value, best_weight, best_used = compute_best_packaging(max_weight, items, best_value, best_weight, best_used, prefix + [True])
+
+    return best_value, best_weight, best_used
 
 def main():
     with open(sys.argv[1], 'r') as test_cases:
@@ -47,12 +37,15 @@ def main():
                 items.append((value, weight))
             max_weight = int(test.split(':')[0].strip()) * 100
 
-            # Use knapsack solution, above, to find our result.
-            result_value, result_items = knapsack(items, max_weight)
-            if len(result_items) == 0:
+            best_value, best_weight, best_used = compute_best_packaging(max_weight, items)
+
+            result = []
+            for i in xrange(len(best_used)):
+                if best_used[i]: result.append(i)
+            if len(result) == 0:
                 print '-'
             else:
-                print ','.join([str(x) for x in sorted(result_items)])
+                print ','.join([str(x+1) for x in sorted(result)])
 
 if __name__ == '__main__':
     main()
