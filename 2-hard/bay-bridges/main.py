@@ -25,7 +25,7 @@ class LineSegment:
     @staticmethod
     def does_ab_intersect_with_cd(a, b, c, d):
         """
-        Return True when line segment AB intersects with line segment CD. Does no test for
+        Return True when line segment AB intersects with line segment CD. Does not test for
         co-linearity.
         """
         return (LineSegment.ccw(a, c, d) != LineSegment.ccw(b, c, d) and
