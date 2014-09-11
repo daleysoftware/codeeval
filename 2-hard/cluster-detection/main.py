@@ -1,7 +1,6 @@
 import sys
 from collections import defaultdict
 
-
 class FriendGraph:
     def __init__(self):
         self.interactions = defaultdict(list)
