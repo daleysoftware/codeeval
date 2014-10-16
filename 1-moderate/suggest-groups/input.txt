@@ -1,0 +1,10 @@
+Amira:Isaura,Lizzie,Madalyn,Margarito,Shakira,Un:Driving,Mineral collecting
+Elliot:Isaura,Madalyn,Margarito,Shakira:Juggling,Mineral collecting
+Isaura:Amira,Elliot,Lizzie,Margarito,Verla,Wilford:Juggling
+Lizzie:Amira,Isaura,Verla:Driving,Mineral collecting,Rugby
+Madalyn:Amira,Elliot,Margarito,Verla:Driving,Mineral collecting,Rugby
+Margarito:Amira,Elliot,Isaura,Madalyn,Un,Verla:Mineral collecting
+Shakira:Amira,Elliot,Verla,Wilford:Mineral collecting
+Un:Amira,Margarito,Wilford:
+Verla:Isaura,Lizzie,Madalyn,Margarito,Shakira:Driving,Juggling,Mineral collecting
+Wilford:Isaura,Shakira,Un:Driving
