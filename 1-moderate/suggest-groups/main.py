@@ -34,4 +34,4 @@ def main():
             print "%s:%s" % (user, ','.join(sorted(suggested_groups)))
 
 if __name__ == '__main__':
-    main()
+    main
