@@ -40,6 +40,16 @@ class Cube(object):
     def exit(self):
         return self._find_empty_cell_in_border(self.length-1)
 
+    def element(self, level, row, col):
+        if level < 0 or row < 0 or col < 0 or level >= self.length or row >= self.length or col >= self.length:
+            return '*'
+        return self.levels[level][row][col]
+
+    @property
+    def min_steps(self):
+        # TODO finish this...
+        return 0
+
 def main():
     test_cases = open(sys.argv[1], 'r')
     for test in test_cases:
@@ -52,11 +62,11 @@ def main():
 
         cube = Cube(levels)
 
+        # TODO remove extra print statements.
         print "============ %i" % cube.length
         print cube.entrance
         print cube.exit
-
-        # TODO finish this...
+        print cube.min_steps
 
     test_cases.close()
 
