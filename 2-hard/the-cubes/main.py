@@ -1,7 +1,8 @@
 import sys
-from enum import Enum
+import enum
+import collections
 
-class Element(Enum):
+class Element(enum.Enum):
     WALL = 1
     HOLE = 2
     FLOOR = 3
@@ -21,6 +22,23 @@ class Point(object):
     def adjacent_to(self, point):
         return abs(self.level-point.level) + abs(self.row-point.row) + abs(self.col-point.col) == 1
 
+    @property
+    def adjacent_points(self):
+        return [
+            Point(self.level-1, self.row,   self.col),
+            Point(self.level+1, self.row,   self.col),
+            Point(self.level,   self.row-1, self.col),
+            Point(self.level,   self.row+1, self.col),
+            Point(self.level,   self.row,   self.col-1),
+            Point(self.level,   self.row,   self.col+1)
+        ]
+
+    def __eq__(self, other):
+        return self.level == other.level and self.row == other.row and self.col == other.col
+
+    def __str__(self):
+        return "(%i,%i,%i)" % (self.level, self.row, self.col)
+
 class Cube(object):
     def __init__(self, levels):
         self.levels = levels
@@ -33,23 +51,23 @@ class Cube(object):
         result = []
         counter = 0
         for level in self.levels:
-            counter += 1
             result.append("Level %i" % counter)
+            counter += 1
             for row in level: result.append(''.join(row))
-            result.append("\n")
-        return "\n".join(result)
+            result.append("")
+        return "\n".join(result).strip()
 
     def _find_empty_cell_in_border(self, level):
         # Top row.
         for i in range(0, self.length):
-            if self.levels[level][0][i] == ' ': return 0, i
+            if self.levels[level][0][i] == ' ': return Point(level, 0, i)
         # Bottom row.
         for i in range(0, self.length):
-            if self.levels[level][self.length-1][i] == ' ': return self.length-1, i
+            if self.levels[level][self.length-1][i] == ' ': return Point(level, self.length-1, i)
         # Sides.
         for i in range(1, self.length-1):
-            if self.levels[level][i][0] == ' ': return i, 0
-            if self.levels[level][i][self.length-1] == ' ': return i, self.length-1
+            if self.levels[level][i][0] == ' ': return Point(level, i, 0)
+            if self.levels[level][i][self.length-1] == ' ': return Point(level, i, self.length-1)
         # Should never reach here if there is an empty cell in the border.
         return None
 
@@ -88,31 +106,32 @@ class Cube(object):
         else:
             return False
 
+    def _compute_min_steps(self, visited, current):
+        if current == self.exit: return 1
+        visited[(current.level, current.row, current.col)] = True
+        result = []
+        for possible_next in current.adjacent_points:
+            if not visited[(possible_next.level, possible_next.row, possible_next.col)] and self._can_travel(current, possible_next):
+                result.append(self._compute_min_steps(visited, possible_next))
+        visited[(current.level, current.row, current.col)] = False
+        result = [x for x in result if x > 0]
+        if len(result) == 0: return 0
+        return 1 + min(result)
+
     @property
     def min_steps(self):
-        # TODO finish this...
-        # Need to use some sort of data structure to track where we have visited... either a 3D
-        # matrix, or perhaps some sort of map (with a default value).
-        return 0
+        visited = collections.defaultdict(lambda: False)
+        return self._compute_min_steps(visited, self.entrance)
 
 def main():
     test_cases = open(sys.argv[1], 'r')
     for test in test_cases:
         test = test.strip()
-        if len(test) == 0:
-            continue
-
+        if len(test) == 0: continue
         length = int(test.split(';')[0])
         levels = list(zip(*[iter(zip(*[iter(test.split(';')[1])]*length))]*length))
-
         cube = Cube(levels)
-
-        # TODO remove extra print statements.
-        print("============ %i" % cube.length)
-        print(cube.entrance)
-        print(cube.exit)
         print(cube.min_steps)
-
     test_cases.close()
 
 if __name__ == '__main__':
