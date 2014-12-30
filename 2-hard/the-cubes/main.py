@@ -5,7 +5,7 @@ class Cube(object):
         self.levels = levels
 
     @property
-    def height(self):
+    def length(self):
         return len(self.levels)
 
     def __str__(self):
@@ -20,15 +20,15 @@ class Cube(object):
 
     def _find_empty_cell_in_border(self, level):
         # Top row.
-        for i in xrange(0, self.height):
+        for i in xrange(0, self.length):
             if self.levels[level][0][i] == ' ': return 0, i
         # Bottom row.
-        for i in xrange(0, self.height):
-            if self.levels[level][self.height-1][i] == ' ': return self.height-1, i
+        for i in xrange(0, self.length):
+            if self.levels[level][self.length-1][i] == ' ': return self.length-1, i
         # Sides.
-        for i in xrange(1, self.height-1):
+        for i in xrange(1, self.length-1):
             if self.levels[level][i][0] == ' ': return i, 0
-            if self.levels[level][i][self.height-1] == ' ': return i, self.height-1
+            if self.levels[level][i][self.length-1] == ' ': return i, self.length-1
         # Should never reach here if there is an empty cell in the border.
         return None
 
@@ -38,7 +38,7 @@ class Cube(object):
 
     @property
     def exit(self):
-        return self._find_empty_cell_in_border(self.height-1)
+        return self._find_empty_cell_in_border(self.length-1)
 
 def main():
     test_cases = open(sys.argv[1], 'r')
@@ -47,12 +47,12 @@ def main():
         if len(test) == 0:
             continue
 
-        height = int(test.split(';')[0])
-        levels = zip(*[iter(zip(*[iter(test.split(';')[1])]*height))]*height)
+        length = int(test.split(';')[0])
+        levels = zip(*[iter(zip(*[iter(test.split(';')[1])]*length))]*length)
 
         cube = Cube(levels)
 
-        print "============ %i" % cube.height
+        print "============ %i" % cube.length
         print cube.entrance
         print cube.exit
 
