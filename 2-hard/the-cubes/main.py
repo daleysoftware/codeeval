@@ -1,8 +1,7 @@
 import sys
-import enum
 import collections
 
-class Element(enum.Enum):
+class Element(object):
     WALL = 1
     HOLE = 2
     FLOOR = 3
@@ -12,6 +11,43 @@ CHAR_TO_ELEMENT_ENUM = {
     'o': Element.HOLE,
     ' ': Element.FLOOR
 }
+
+class Graph:
+  def __init__(self):
+    self.nodes = set()
+    self.edges = collections.defaultdict(list)
+    self.distances = {}
+
+  def add_node(self, value):
+    self.nodes.add(value)
+
+  def add_edge(self, from_node, to_node, distance=1):
+    self.edges[from_node].append(to_node)
+    self.edges[to_node].append(from_node)
+    self.distances[(from_node, to_node)] = distance
+
+def dijsktra(graph, initial):
+  visited = {initial: 0}
+  path = {}
+  nodes = set(graph.nodes)
+  while nodes:
+    min_node = None
+    for node in nodes:
+      if node in visited:
+        if min_node is None:
+          min_node = node
+        elif visited[node] < visited[min_node]:
+          min_node = node
+    if min_node is None:
+      break
+    nodes.remove(min_node)
+    current_weight = visited[min_node]
+    for edge in graph.edges[min_node]:
+      weight = current_weight + graph.distances[(min_node, edge)]
+      if edge not in visited or weight < visited[edge]:
+        visited[edge] = weight
+        path[edge] = min_node
+  return visited
 
 class Point(object):
     def __init__(self, level, row, col):
@@ -38,6 +74,12 @@ class Point(object):
 
     def __str__(self):
         return "(%i,%i,%i)" % (self.level, self.row, self.col)
+
+    def __key(self):
+        return self.level, self.row, self.col
+
+    def __hash__(self):
+        return hash(self.__key())
 
 class Cube(object):
     def __init__(self, levels):
@@ -81,7 +123,7 @@ class Cube(object):
 
     def _element(self, point):
         if point.level < 0 or point.row < 0 or point.col < 0 or \
-           point.level >= self.length or point.row >= self.length or point.col >= self.length:
+                point.level >= self.length or point.row >= self.length or point.col >= self.length:
             return Element.WALL
         return CHAR_TO_ELEMENT_ENUM[self.levels[point.level][point.row][point.col]]
 
@@ -106,22 +148,22 @@ class Cube(object):
         else:
             return False
 
-    def _compute_min_steps(self, visited, current):
-        if current == self.exit: return 1
+    def _create_graph(self, visited, graph, current):
+        if visited[(current.level, current.row, current.col)]: return
         visited[(current.level, current.row, current.col)] = True
-        result = []
-        for possible_next in current.adjacent_points:
-            if not visited[(possible_next.level, possible_next.row, possible_next.col)] and self._can_travel(current, possible_next):
-                result.append(self._compute_min_steps(visited, possible_next))
-        visited[(current.level, current.row, current.col)] = False
-        result = [x for x in result if x > 0]
-        if len(result) == 0: return 0
-        return 1 + min(result)
+        graph.add_node(current)
+        for p in current.adjacent_points:
+            if self._can_travel(current, p):
+                graph.add_node(p)
+                graph.add_edge(current, p)
+                self._create_graph(visited, graph, p)
+        return graph
 
-    @property
-    def min_steps(self):
+    def graph(self):
         visited = collections.defaultdict(lambda: False)
-        return self._compute_min_steps(visited, self.entrance)
+        graph = Graph()
+        self._create_graph(visited, graph, self.entrance)
+        return graph
 
 def main():
     test_cases = open(sys.argv[1], 'r')
@@ -131,7 +173,13 @@ def main():
         length = int(test.split(';')[0])
         levels = list(zip(*[iter(zip(*[iter(test.split(';')[1])]*length))]*length))
         cube = Cube(levels)
-        print(cube.min_steps)
+
+        result = dijsktra(cube.graph(), cube.entrance)
+        if cube.exit not in result:
+            print(0)
+        else:
+            print(1 + result[cube.exit])
+
     test_cases.close()
 
 if __name__ == '__main__':
