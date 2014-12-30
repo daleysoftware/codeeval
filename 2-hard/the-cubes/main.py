@@ -18,6 +18,28 @@ class Cube(object):
             result.append("\n")
         return "\n".join(result)
 
+    def _find_empty_cell_in_border(self, level):
+        # Top row.
+        for i in xrange(0, self.height):
+            if self.levels[level][0][i] == ' ': return 0, i
+        # Bottom row.
+        for i in xrange(0, self.height):
+            if self.levels[level][self.height-1][i] == ' ': return self.height-1, i
+        # Sides.
+        for i in xrange(1, self.height-1):
+            if self.levels[level][i][0] == ' ': return i, 0
+            if self.levels[level][i][self.height-1] == ' ': return i, self.height-1
+        # Should never reach here if there is an empty cell in the border.
+        return None
+
+    @property
+    def entrance(self):
+        return self._find_empty_cell_in_border(0)
+
+    @property
+    def exit(self):
+        return self._find_empty_cell_in_border(self.height-1)
+
 def main():
     test_cases = open(sys.argv[1], 'r')
     for test in test_cases:
@@ -31,7 +53,8 @@ def main():
         cube = Cube(levels)
 
         print "============ %i" % cube.height
-        print cube
+        print cube.entrance
+        print cube.exit
 
         # TODO finish this...
 
