@@ -40,6 +40,26 @@ class Trajectory(object):
             Trajectory.DN_R: Trajectory.UP_L
         } [trajectory]
 
+    @staticmethod
+    def reflect_vertical(trajectory):
+        return {
+            Trajectory.UP_L: Trajectory.UP_R,
+            Trajectory.UP_R: Trajectory.UP_L,
+            Trajectory.DN_L: Trajectory.DN_R,
+            Trajectory.DN_R: Trajectory.DN_L
+        } [trajectory]
+
+    @staticmethod
+    def reflect_horizontal(trajectory):
+        return {
+            Trajectory.UP_L: Trajectory.DN_L,
+            Trajectory.UP_R: Trajectory.DN_R,
+            Trajectory.DN_L: Trajectory.UP_L,
+            Trajectory.DN_R: Trajectory.UP_R
+        } [trajectory]
+
+
+
 class Ray(object):
     def __init__(self, position, trajectory, intensity):
         self.position = position
@@ -55,6 +75,7 @@ class Room(object):
 
     def __str__(self):
         return '\n'.join(''.join(x) for x in self.schematic)
+        #return ''.join(''.join(x) for x in self.schematic)
 
     def _get_element(self, point):
         return self.schematic[point.row][point.col]
@@ -126,17 +147,46 @@ class Room(object):
         corners = [Point(0, 0), Point(0, ROOM_SIZE-1), Point(ROOM_SIZE-1, 0), Point(ROOM_SIZE-1, ROOM_SIZE-1)]
         return point in corners
 
+    @staticmethod
+    def _is_in_room(point):
+        return 0 <= point.col < ROOM_SIZE and 0 <= point.row < ROOM_SIZE
+
     def _propagate_light(self, rays):
         result = []
         for ray in rays:
             new_rays = []
+
             next_position = Room._next_position(ray.position, ray.trajectory)
+            if not self._is_in_room(next_position): continue
+
             next_element = self._get_element(next_position)
 
             if next_element == Element.WALL:
-                if Room._is_corner(next_position): pass
-                # TODO finish this...
-                pass
+                if not Room._is_corner(next_position):
+                    # Left wall.
+                    if next_position.col == 0:
+                        row = next_position.row
+                        col = next_position.col + 1
+                        trajectory = Trajectory.reflect_vertical(ray.trajectory)
+                    # Right wall.
+                    elif next_position.col == ROOM_SIZE-1:
+                        row = next_position.row
+                        col = next_position.col - 1
+                        trajectory = Trajectory.reflect_vertical(ray.trajectory)
+                    # Top wall.
+                    elif next_position.row == 0:
+                        row = next_position.row + 1
+                        col = next_position.col
+                        trajectory = Trajectory.reflect_horizontal(ray.trajectory)
+                    # Bottom wall.
+                    else:
+                        row = next_position.row -1
+                        col = next_position.col
+                        trajectory = Trajectory.reflect_horizontal(ray.trajectory)
+
+                    next_position = Point(row, col)
+                    self._set_element(next_position, trajectory)
+                    new_rays.append(Ray(next_position, trajectory, ray.intensity))
             elif next_element == Element.HOLE:
                 # The ray hit a hole; kill it off.
                 pass
@@ -145,11 +195,7 @@ class Room(object):
                 trajectories = copy.deepcopy(Trajectory.ALL)
                 trajectories.remove(Trajectory.reverse(ray.trajectory))
                 for trajectory in trajectories:
-                    post_prism_position = Room._next_position(next_position, trajectory)
-                    # Handle the case where we have adjacent prisms. Do not send rays back and forth
-                    # indefinitely.
-                    if self._get_element(post_prism_position) != Element.PRISM:
-                        new_rays.append(Ray(next_position, trajectory, ray.intensity))
+                    new_rays.append(Ray(next_position, trajectory, ray.intensity))
             elif next_element == Element.EMPTY or \
                     next_element == Element.LIGHT_X or \
                     next_element == Element.LIGHT_BACK or \
@@ -173,8 +219,9 @@ def main():
         test = test.strip()
         if len(test) == 0: continue
         room = Room([list(t) for t in zip(*[iter(test)]*ROOM_SIZE)])
+        print '---'
+        print room
         room.propagate_light()
-        # TODO print the room properly...
         print room
     test_cases.close()
 
