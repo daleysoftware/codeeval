@@ -9,6 +9,9 @@ class Point(object):
         self.row = row
         self.col = col
 
+    def __eq__(self, other):
+        return self.row == other.row and self.col == other.col
+
     def __str__(self):
         return "(%i,%i)" % (self.row, self.col)
 
@@ -56,8 +59,24 @@ class Room(object):
     def _get_element(self, point):
         return self.schematic[point.row][point.col]
 
-    def _set_element(self, point, element):
-        self.schematic[point.row][point.col] = element
+    def _set_element(self, point, trajectory):
+        element = self._get_element(point)
+        if trajectory == Trajectory.UP_R or trajectory == Trajectory.DN_L:
+            # Forward slash
+            self.schematic[point.row][point.col] = {
+                ' ': '/',
+                '/': '/',
+                '\\': 'X',
+                'X': 'X'
+            } [element]
+        else:
+            # Back slash
+            self.schematic[point.row][point.col] = {
+                ' ': '\\',
+                '/': 'X',
+                '\\': '\\',
+                'X': 'X'
+            } [element]
 
     @property
     def _hole(self):
@@ -102,6 +121,11 @@ class Room(object):
             Trajectory.DN_R: Point(current_position.row+1, current_position.col+1)
         } [trajectory]
 
+    @staticmethod
+    def _is_corner(point):
+        corners = [Point(0, 0), Point(0, ROOM_SIZE-1), Point(ROOM_SIZE-1, 0), Point(ROOM_SIZE-1, ROOM_SIZE-1)]
+        return point in corners
+
     def _propagate_light(self, rays):
         result = []
         for ray in rays:
@@ -110,7 +134,8 @@ class Room(object):
             next_element = self._get_element(next_position)
 
             if next_element == Element.WALL:
-                # TODO
+                if Room._is_corner(next_position): pass
+                # TODO finish this...
                 pass
             elif next_element == Element.HOLE:
                 # The ray hit a hole; kill it off.
@@ -121,25 +146,16 @@ class Room(object):
                 trajectories.remove(Trajectory.reverse(ray.trajectory))
                 for trajectory in trajectories:
                     post_prism_position = Room._next_position(next_position, trajectory)
-                    # handle the case where we have adjacent prisms. Do not send rays back and forth
+                    # Handle the case where we have adjacent prisms. Do not send rays back and forth
                     # indefinitely.
                     if self._get_element(post_prism_position) != Element.PRISM:
                         new_rays.append(Ray(next_position, trajectory, ray.intensity))
-            elif next_element == Element.EMPTY:
+            elif next_element == Element.EMPTY or \
+                    next_element == Element.LIGHT_X or \
+                    next_element == Element.LIGHT_BACK or \
+                    next_element == Element.LIGHT_FORWARD:
                 new_rays.append(Ray(next_position, ray.trajectory, ray.intensity-1))
-                # TODO
-                self._set_element(next_position, '!')
-            elif next_element == Element.LIGHT_X:
-                # TODO
-                pass
-            elif next_element == Element.LIGHT_BACK:
-                # TODO
-                pass
-            elif next_element == Element.LIGHT_FORWARD:
-                # TODO
-                pass
-
-            # TODO
+                self._set_element(next_position, ray.trajectory)
 
             # Eliminate ray if it has lost its intensity.
             for new_ray in new_rays:
@@ -158,6 +174,7 @@ def main():
         if len(test) == 0: continue
         room = Room([list(t) for t in zip(*[iter(test)]*ROOM_SIZE)])
         room.propagate_light()
+        # TODO print the room properly...
         print room
     test_cases.close()
 
