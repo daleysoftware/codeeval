@@ -1,4 +1,5 @@
 import sys
+import copy
 
 ROOM_SIZE = 10
 LIGHT_DISTRIBUTION = 20
@@ -25,6 +26,25 @@ class Trajectory(object):
     UP_R = 1
     DN_L = 2
     DN_R = 3
+    ALL = [0, 1, 2, 3]
+
+    @staticmethod
+    def reverse(trajectory):
+        return {
+            Trajectory.UP_L: Trajectory.DN_R,
+            Trajectory.UP_R: Trajectory.DN_L,
+            Trajectory.DN_L: Trajectory.UP_R,
+            Trajectory.DN_R: Trajectory.UP_L
+        } [trajectory]
+
+class Ray(object):
+    def __init__(self, position, trajectory, intensity):
+        self.position = position
+        self.trajectory = trajectory
+        self.intensity = intensity
+
+    def __str__(self):
+        return "Ray: {%s, %s, %i}" % (self.position, self.trajectory, self.intensity)
 
 class Room(object):
     def __init__(self, schematic):
@@ -33,26 +53,29 @@ class Room(object):
     def __str__(self):
         return '\n'.join(''.join(x) for x in self.schematic)
 
-    def _element(self, point):
+    def _get_element(self, point):
         return self.schematic[point.row][point.col]
+
+    def _set_element(self, point, element):
+        self.schematic[point.row][point.col] = element
 
     @property
     def _hole(self):
         # Top and bottom rows.
         for c in xrange(0, ROOM_SIZE):
-            if self._element(Point(0, c)) != Element.WALL: return Point(0, c)
-            if self._element(Point(ROOM_SIZE-1, c)) != Element.WALL: return Point(ROOM_SIZE-1, c)
+            if self._get_element(Point(0, c)) != Element.WALL: return Point(0, c)
+            if self._get_element(Point(ROOM_SIZE-1, c)) != Element.WALL: return Point(ROOM_SIZE-1, c)
         # Sides
         for r in xrange(1, ROOM_SIZE-1):
-            if self._element(Point(r, 0)) != Element.WALL: return Point(r, 0)
-            if self._element(Point(r, ROOM_SIZE-1)) != Element.WALL: return Point(r, ROOM_SIZE-1)
+            if self._get_element(Point(r, 0)) != Element.WALL: return Point(r, 0)
+            if self._get_element(Point(r, ROOM_SIZE-1)) != Element.WALL: return Point(r, ROOM_SIZE-1)
         # Should never reach here given valid input.
         return None
 
     @property
     def _initial_trajectory(self):
         hole = self._hole
-        hole_element = self._element(hole)
+        hole_element = self._get_element(hole)
 
         # Top.
         if hole.row == 0:
@@ -70,12 +93,61 @@ class Room(object):
         # Should never reach this point.
         return None
 
+    @staticmethod
+    def _next_position(current_position, trajectory):
+        return {
+            Trajectory.UP_L: Point(current_position.row-1, current_position.col-1),
+            Trajectory.UP_R: Point(current_position.row-1, current_position.col+1),
+            Trajectory.DN_L: Point(current_position.row+1, current_position.col-1),
+            Trajectory.DN_R: Point(current_position.row+1, current_position.col+1)
+        } [trajectory]
+
     def _propagate_light(self, rays):
-        # TODO move light one unit and update room state.
-        return []
+        result = []
+        for ray in rays:
+            new_rays = []
+            next_position = Room._next_position(ray.position, ray.trajectory)
+            next_element = self._get_element(next_position)
+
+            if next_element == Element.WALL:
+                # TODO
+                pass
+            elif next_element == Element.HOLE:
+                # The ray hit a hole; kill it off.
+                pass
+            elif next_element == Element.PRISM:
+                # The ray hit a prism; create three new rays.
+                trajectories = copy.deepcopy(Trajectory.ALL)
+                trajectories.remove(Trajectory.reverse(ray.trajectory))
+                for trajectory in trajectories:
+                    post_prism_position = Room._next_position(next_position, trajectory)
+                    # handle the case where we have adjacent prisms. Do not send rays back and forth
+                    # indefinitely.
+                    if self._get_element(post_prism_position) != Element.PRISM:
+                        new_rays.append(Ray(next_position, trajectory, ray.intensity))
+            elif next_element == Element.EMPTY:
+                new_rays.append(Ray(next_position, ray.trajectory, ray.intensity-1))
+                # TODO
+                self._set_element(next_position, '!')
+            elif next_element == Element.LIGHT_X:
+                # TODO
+                pass
+            elif next_element == Element.LIGHT_BACK:
+                # TODO
+                pass
+            elif next_element == Element.LIGHT_FORWARD:
+                # TODO
+                pass
+
+            # TODO
+
+            # Eliminate ray if it has lost its intensity.
+            for new_ray in new_rays:
+                if new_ray.intensity > 0: result.append(new_ray)
+        return result
 
     def propagate_light(self):
-        rays = [(self._hole, self._initial_trajectory, LIGHT_DISTRIBUTION-1)]
+        rays = [Ray(self._hole, self._initial_trajectory, LIGHT_DISTRIBUTION-1)]
         while len(rays) > 0:
             rays = self._propagate_light(rays)
 
@@ -84,10 +156,9 @@ def main():
     for test in test_cases:
         test = test.strip()
         if len(test) == 0: continue
-        room = Room(zip(*[iter(test)]*ROOM_SIZE))
+        room = Room([list(t) for t in zip(*[iter(test)]*ROOM_SIZE)])
         room.propagate_light()
         print room
-        # TODO print properly
     test_cases.close()
 
 if __name__ == '__main__':
