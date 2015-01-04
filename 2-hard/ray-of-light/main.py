@@ -17,7 +17,7 @@ class Point(object):
 
 class Element(object):
     WALL = '#'
-    HOLE = 'o'
+    COLUMN = 'o'
     PRISM = '*'
     EMPTY = ' '
     LIGHT_X = 'X'
@@ -74,8 +74,8 @@ class Room(object):
         self.schematic = schematic
 
     def __str__(self):
-        return '\n'.join(''.join(x) for x in self.schematic)
-        #return ''.join(''.join(x) for x in self.schematic)
+        #return '\n'.join(''.join(x) for x in self.schematic)
+        return ''.join(''.join(x) for x in self.schematic)
 
     def _get_element(self, point):
         return self.schematic[point.row][point.col]
@@ -151,6 +151,10 @@ class Room(object):
     def _is_in_room(point):
         return 0 <= point.col < ROOM_SIZE and 0 <= point.row < ROOM_SIZE
 
+    @staticmethod
+    def _is_on_wall(point):
+        return point.row == 0 or point.row == ROOM_SIZE-1 or point.col == 0 or point.col == ROOM_SIZE-1
+
     def _propagate_light(self, rays):
         result = []
         for ray in rays:
@@ -161,7 +165,10 @@ class Room(object):
 
             next_element = self._get_element(next_position)
 
-            if next_element == Element.WALL:
+            if next_element != Element.WALL and Room._is_on_wall(next_position):
+                # Kill it off.
+                pass
+            elif next_element == Element.WALL:
                 if not Room._is_corner(next_position):
                     # Left wall.
                     if next_position.col == 0:
@@ -187,7 +194,7 @@ class Room(object):
                     next_position = Point(row, col)
                     self._set_element(next_position, trajectory)
                     new_rays.append(Ray(next_position, trajectory, ray.intensity))
-            elif next_element == Element.HOLE:
+            elif next_element == Element.COLUMN:
                 # The ray hit a hole; kill it off.
                 pass
             elif next_element == Element.PRISM:
@@ -219,8 +226,8 @@ def main():
         test = test.strip()
         if len(test) == 0: continue
         room = Room([list(t) for t in zip(*[iter(test)]*ROOM_SIZE)])
-        print '---'
-        print room
+        #print '---'
+        #print room
         room.propagate_light()
         print room
     test_cases.close()
