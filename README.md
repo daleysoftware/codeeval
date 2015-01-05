@@ -8,6 +8,6 @@ Development Notes
 
 Versions unless otherwise stated:
 
-Python: 2.7
-Java: 1.7
-G++: 4.7 (C++ 11)
+* Python: 2.7
+* Java: 1.7
+* G++: 4.7 (C++ 11)
