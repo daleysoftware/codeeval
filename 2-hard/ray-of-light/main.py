@@ -1,7 +1,7 @@
 import sys
 import copy
 
-DEBUG = True
+DEBUG = False
 ROOM_SIZE = 10
 LIGHT_DISTRIBUTION = 20
 
@@ -58,8 +58,6 @@ class Trajectory(object):
             Trajectory.DN_L: Trajectory.UP_L,
             Trajectory.DN_R: Trajectory.UP_R
         } [trajectory]
-
-
 
 class Ray(object):
     def __init__(self, position, trajectory, intensity):
@@ -166,10 +164,7 @@ class Room(object):
 
             next_element = self._get_element(next_position)
 
-            if next_element != Element.WALL and Room._is_on_wall(next_position):
-                # Kill it off.
-                pass
-            elif next_element == Element.WALL:
+            if next_element == Element.WALL:
                 if not Room._is_corner(next_position):
                     # Left wall.
                     if next_position.col == 0:
@@ -194,7 +189,7 @@ class Room(object):
 
                     next_position = Point(row, col)
                     self._set_element(next_position, trajectory)
-                    new_rays.append(Ray(next_position, trajectory, ray.intensity))
+                    new_rays.append(Ray(next_position, trajectory, ray.intensity-1))
             elif next_element == Element.COLUMN:
                 # The ray hit a hole; kill it off.
                 pass
