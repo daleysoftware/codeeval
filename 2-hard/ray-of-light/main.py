@@ -1,6 +1,7 @@
 import sys
 import copy
 
+DEBUG = True
 ROOM_SIZE = 10
 LIGHT_DISTRIBUTION = 20
 
@@ -74,8 +75,8 @@ class Room(object):
         self.schematic = schematic
 
     def __str__(self):
-        #return '\n'.join(''.join(x) for x in self.schematic)
-        return ''.join(''.join(x) for x in self.schematic)
+        delimiter = '\n' if DEBUG else ''
+        return delimiter.join(''.join(x) for x in self.schematic)
 
     def _get_element(self, point):
         return self.schematic[point.row][point.col]
@@ -226,8 +227,7 @@ def main():
         test = test.strip()
         if len(test) == 0: continue
         room = Room([list(t) for t in zip(*[iter(test)]*ROOM_SIZE)])
-        #print '---'
-        #print room
+        if DEBUG: print '---\n' + str(room)
         room.propagate_light()
         print room
     test_cases.close()
