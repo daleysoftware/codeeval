@@ -22,7 +22,6 @@ def print_justified(text):
             print ' '.join(line_list)
             break
 
-        # TODO finish
         extra_spaces = 80 - len(' '.join(line_list))
         word_breaks = len(line_list) - 1
         average_extra_spaces = extra_spaces / word_breaks
