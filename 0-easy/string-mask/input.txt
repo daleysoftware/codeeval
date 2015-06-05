@@ -1,0 +1,3 @@
+hello 11001
+world 10000
+cba 111
