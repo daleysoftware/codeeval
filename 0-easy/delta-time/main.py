@@ -18,7 +18,7 @@ def main():
         else:
             delta = datetime.strptime(t2, FMT) - datetime.strptime(t1, FMT)
 
-        print "%.2d:%.2d:%.2d" % (delta.seconds/3600, (delta.seconds/60)%60, delta.seconds%60)
+        print("%.2d:%.2d:%.2d" % (delta.seconds/3600, (delta.seconds/60)%60, delta.seconds%60))
 
     test_cases.close()
 

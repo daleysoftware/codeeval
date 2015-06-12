@@ -39,6 +39,6 @@ for test in test_cases:
         else:
             result -= operand
 
-    print result
+    print(result)
 
 test_cases.close()

@@ -10,10 +10,10 @@ def main(input_file):
     with open(input_file, 'r') as fh:
         for line in fh:
             houses = sorted([int(x) for x in line.split(' ')[1:]])
-            difference = sys.maxint
+            difference = float("inf")
             for house in houses:
                 difference = min(difference, compute_difference(houses, house))
-            print difference
+            print(difference)
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:

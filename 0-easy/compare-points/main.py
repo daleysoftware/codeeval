@@ -12,28 +12,26 @@ def main(input_file):
     with open(input_file, 'r') as fh:
         for line in fh:
             o, p, q, r = [int(x) for x in line.split(' ')]
-
             current = Point(o, p)
             overlook = Point(q, r)
-
             if current == overlook:
-                print 'here'
+                print('here')
             elif overlook.x >  current.x and overlook.y >  current.y:
-                print 'NE'
+                print('NE')
             elif overlook.x >  current.x and overlook.y == current.y:
-                print 'E'
+                print('E')
             elif overlook.x >  current.x and overlook.y <  current.y:
-                print 'SE'
+                print('SE')
             elif overlook.x == current.x and overlook.y <  current.y:
-                print 'S'
+                print('S')
             elif overlook.x <  current.x and overlook.y <  current.y:
-                print 'SW'
+                print('SW')
             elif overlook.x <  current.x and overlook.y == current.y:
-                print 'W'
+                print('W')
             elif overlook.x <  current.x and overlook.y >  current.y:
-                print 'NW'
+                print('NW')
             else:
-                print 'N'
+                print('N')
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:

@@ -14,7 +14,7 @@ def main():
         test = test.strip()
         if len(test) == 0:
             continue
-        print remove_repetitions(test)
+        print(remove_repetitions(test))
     test_cases.close()
 
 if __name__ == '__main__':

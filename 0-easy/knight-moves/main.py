@@ -53,7 +53,7 @@ def main(input_filename):
             col, row = ChessBoardPosition.position_string_to_ints(starting_position)
             next_knight_moves = ChessBoard().next_knight_moves(ChessBoardPosition(col, row))
 
-            print ' '.join(sorted([str(n) for n in next_knight_moves if n.is_on_board()]))
+            print(' '.join(sorted([str(n) for n in next_knight_moves if n.is_on_board()])))
 
     fh.close()
 

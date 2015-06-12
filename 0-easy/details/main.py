@@ -10,7 +10,7 @@ def main():
         iterations = 0
         while True:
             finished = False
-            for col in xrange(len(matrix)):
+            for col in range(len(matrix)):
                 row = matrix[col]
                 if '.Y' in row and 'XY' not in row:
                     matrix[col] = row.replace('.Y', 'Y')
@@ -20,7 +20,7 @@ def main():
             if finished:
                 break
             iterations += 1
-        print iterations
+        print(iterations)
     test_cases.close()
 
 if __name__ == '__main__':

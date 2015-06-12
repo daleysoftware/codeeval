@@ -17,5 +17,4 @@ for test in test_cases:
     test = test.strip()
     if len(test) == 0:
         continue
-
-    print format_text(test)
+    print(format_text(test))

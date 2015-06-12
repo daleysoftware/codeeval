@@ -30,7 +30,7 @@ def main():
                 punctuation = test[test.find(s) + len(s)]
                 line.append(s + punctuation)
             count += 1
-        print ' '.join(line)
+        print(' '.join(line))
     test_cases.close()
 
 if __name__ == '__main__':

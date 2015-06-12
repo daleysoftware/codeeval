@@ -5,7 +5,6 @@ for test in test_cases:
     test = test.strip()
     if len(test) == 0:
         continue
-
-    print int(test, 16)
+    print(int(test, 16))
 
 test_cases.close()

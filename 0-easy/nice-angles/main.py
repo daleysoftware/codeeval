@@ -17,7 +17,7 @@ def main():
             continue
         decimal_degree = float(test)
         minutes_seconds_degree = decimal_degree_to_minutes_seconds(decimal_degree)
-        print format_degree_minutes_seconds(minutes_seconds_degree)
+        print(format_degree_minutes_seconds(minutes_seconds_degree))
     test_cases.close()
 
 if __name__ == '__main__':

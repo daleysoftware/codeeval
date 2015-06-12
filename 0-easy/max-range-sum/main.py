@@ -7,9 +7,9 @@ def main(input_file):
             days = int(line.split(';')[0])
             array = [int(x) for x in line.split(';')[1].split(' ')]
             result = 0
-            for i in xrange(0, len(array)-days+1):
+            for i in range(0, len(array)-days+1):
                 result = max(sum(array[i:i+days]), result)
-            print result
+            print(result)
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:

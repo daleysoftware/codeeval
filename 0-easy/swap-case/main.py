@@ -5,7 +5,6 @@ for test in test_cases:
     test = test.strip()
     if len(test) == 0:
         continue
-
-    print test.swapcase()
+    print(test.swapcase())
 
 test_cases.close()

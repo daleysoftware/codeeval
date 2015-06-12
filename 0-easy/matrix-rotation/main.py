@@ -13,7 +13,7 @@ def main():
         n = int(math.sqrt(len(test)))
         matrix = [test[i:i+n] for i in range(0, len(test), n)]
         rotated = zip(*matrix[::-1])
-        print ' '.join([' '.join(row) for row in rotated])
+        print(' '.join([' '.join(row) for row in rotated]))
     test_cases.close()
 
 if __name__ == '__main__':

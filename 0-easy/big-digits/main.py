@@ -72,11 +72,11 @@ for test in test_cases:
     for t in test:
         if t.isdigit(): digits.append(int(t))
 
-    for line in xrange(0, 5):
+    for line in range(0, 5):
         for d in digits:
             sys.stdout.write(big_digits[d][line])
             sys.stdout.write('-')
-        print
-    print '-----' * len(digits)
+        print()
+    print('-----' * len(digits))
 
 test_cases.close()
