@@ -17,7 +17,7 @@ def check_matching(pattern, match, matching_matrix, row=0, col=0):
     if row >= len(matching_matrix) or col >= len(matching_matrix[row]): return
     # This element has already been checked.
     if matching_matrix[row][col]: return
-    for c in xrange(col, len(match)):
+    for c in range(col, len(match)):
         matching_matrix[row][c] = False
         if matches(pattern[row], match[col:c+1]):
             matching_matrix[row][c] = True
@@ -28,9 +28,9 @@ def main():
     for test in test_cases:
         pattern, match = test.strip().split(' ')
         lm, lp = len(match), len(pattern)
-        matching_matrix = [[None for m in xrange(lm)] for p in xrange(lp)]
+        matching_matrix = [[None for m in range(lm)] for p in range(lp)]
         check_matching(pattern, match, matching_matrix)
-        print 'Yes' if matching_matrix[-1][-1] else 'No'
+        print('Yes' if matching_matrix[-1][-1] else 'No')
     test_cases.close()
 
 if __name__ == '__main__':

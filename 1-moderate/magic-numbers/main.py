@@ -36,7 +36,7 @@ def main(input_filename):
             continue
         a, b = [int(x) for x in test.split(' ')]
         magics = []
-        for i in xrange(a, b+1):
+        for i in range(a, b+1):
             if is_magic(i):
                 magics.append(i)
         if len(magics) == 0:

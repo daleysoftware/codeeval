@@ -28,7 +28,7 @@ def main():
         if len(test) == 0:
             continue
         test = test.replace(' ', '')
-        print '1' if is_valid(test) else '0'
+        print('1' if is_valid(test) else '0')
 
     test_cases.close()
 

@@ -7,7 +7,7 @@ def normalize(uri):
 
         if match is not None:
             old_value = match.group(0)
-            new_value = match.group(1).decode('hex')
+            new_value = bytes.fromhex(match.group(1)).decode('utf-8')
             uri = uri.replace(old_value, new_value)
         else:
             break
@@ -29,7 +29,7 @@ for test in test_cases:
     m2 = re.match(match, uri2)
 
     if m1 is None or m2 is None:
-        print False
+        print('False')
         continue
 
     scheme1 = m1.group(1).lower()
@@ -45,8 +45,8 @@ for test in test_cases:
     path2 = m2.group(4).lower()
 
     if scheme1 == scheme2 and host1 == host2 and port1 == port2 and path1 == path2:
-        print True
+        print('True')
     else:
-        print False
+        print('False')
 
 test_cases.close()

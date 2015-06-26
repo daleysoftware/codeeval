@@ -17,30 +17,27 @@ discrete_options_mapping = {
     10000: 'ONE HUNDRED'
 }
 
-test_cases = open(sys.argv[1], 'r')
-for test in test_cases:
-    test = test.strip()
-    if len(test) == 0:
-        continue
+def main():
+    test_cases = open(sys.argv[1], 'r')
+    for test in test_cases:
+        test = test.strip()
+        if len(test) == 0: continue
+        total = int(float(test.split(";")[0]) * 100)
+        given = int(float(test.split(";")[1]) * 100)
+        change = given - total
+        if change == 0:
+            print('ZERO')
+            continue
+        if change < 0:
+            print('ERROR')
+            continue
+        result = []
+        for option in discrete_options:
+            while change >= option:
+                change = change - option
+                result.append(discrete_options_mapping[option])
+        print(','.join(result))
+    test_cases.close()
 
-    total = int(float(test.split(";")[0]) * 100)
-    given = int(float(test.split(";")[1]) * 100)
-    change = given - total
-
-    if change == 0:
-        print 'ZERO'
-        continue
-
-    if change < 0:
-        print 'ERROR'
-        continue
-
-    result = []
-    for option in discrete_options:
-        while change >= option:
-            change = change - option
-            result.append(discrete_options_mapping[option])
-
-    print ','.join(result)
-
-test_cases.close()
+if __name__ == '__main__':
+    main()

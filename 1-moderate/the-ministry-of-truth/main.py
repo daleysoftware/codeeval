@@ -38,7 +38,7 @@ for test in test_cases:
                 result.append('_' * len(wB))
 
     if not success:
-        print 'I cannot fix history'
+        print('I cannot fix history')
         continue
 
     result_length = len(result)
@@ -46,6 +46,6 @@ for test in test_cases:
         for i in range(result_length, len(utterance2)):
             result.append('_' * len(utterance2[i]))
 
-    print " ".join(result)
+    print(" ".join(result))
 
 test_cases.close()

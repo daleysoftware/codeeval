@@ -45,6 +45,6 @@ for test in test_cases:
     for i in range(0, len(test)):
         output += get_mapping(test[i])
 
-    print output
+    print(output)
 
 test_cases.close()

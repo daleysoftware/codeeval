@@ -50,15 +50,15 @@ for test in test_cases:
         first.add_link(second)
 
     result = 0
-    for value, node in nodes.iteritems():
+    for value, node in nodes.items():
         longest_chain = node.compute_longest_chain()
 
         if longest_chain > result:
             result = longest_chain
 
     if result <= 1:
-        print 'None'
+        print('None')
     else:
-        print result
+        print(result)
 
 test_cases.close()

@@ -7,7 +7,6 @@ import operator
 def ip_address_is_valid(address):
     if address < 0x1000000:
         return False
-
     try:
         socket.inet_aton(int_to_formatted_ip(address))
     except socket.error:
@@ -82,26 +81,22 @@ def main(content):
                  find_dotted_decimal, find_hex, find_octal, find_decimal]:
         content, ips = func(content)
         all_ips.extend(ips)
-
     all_ips_frequency_map = {}
     for ip in all_ips:
         if not ip_address_is_valid(ip):
             continue
-
         if ip in all_ips_frequency_map:
             all_ips_frequency_map[ip] += 1
         else:
             all_ips_frequency_map[ip] = 1
-
-    sorted_ips = sorted(all_ips_frequency_map.iteritems(), key=operator.itemgetter(1), reverse=True)
-
+    sorted_ips = sorted(all_ips_frequency_map.items(), key=operator.itemgetter(1), reverse=True)
     max_frequency = sorted_ips[0][1]
     result = []
     for ip in sorted_ips:
         if ip[1] != max_frequency:
             break
         result.append(int_to_formatted_ip(ip[0]))
-    print ' '.join(result)
+    print(' '.join(result))
 
 if __name__ == "__main__":
     with open(sys.argv[1], 'r') as content_file:

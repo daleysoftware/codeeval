@@ -52,7 +52,7 @@ def cmyk_to_rgb(color_code):
 def is_hex(color_code):
     return len(color_code) > 1 and color_code[0] == '#'
 def hex_to_rgb(color_code):
-    r, g, b = struct.unpack('BBB', color_code[1:].decode('hex'))
+    r, g, b = struct.unpack('BBB', bytes.fromhex(color_code[1:]))
     return format_rgb(r, g, b)
 
 test_cases = open(sys.argv[1], 'r')
@@ -61,13 +61,13 @@ for test in test_cases:
     if len(color_code) == 0:
         continue
     if is_hsl(color_code):
-        print hsl_to_rgb(color_code)
+        print(hsl_to_rgb(color_code))
     elif is_hsv(color_code):
-        print hsv_to_rgb(color_code)
+        print(hsv_to_rgb(color_code))
     elif is_cmyk(color_code):
-        print cmyk_to_rgb(color_code)
+        print(cmyk_to_rgb(color_code))
     elif is_hex(color_code):
-        print hex_to_rgb(color_code)
+        print(hex_to_rgb(color_code))
     else:
         raise Exception()
 test_cases.close()

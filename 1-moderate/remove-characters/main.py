@@ -10,7 +10,7 @@ def main():
         chars = test.split(',')[1].strip()
         for c in chars:
             words = words.replace(c, '')
-        print words
+        print(words)
     test_cases.close()
 
 if __name__ == '__main__':

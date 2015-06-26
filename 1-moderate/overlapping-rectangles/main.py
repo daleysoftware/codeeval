@@ -63,6 +63,6 @@ for test in test_cases:
     b = Rectangle(b_upper_left_x, b_upper_left_y,
                   b_lower_right_x, b_lower_right_y)
 
-    print a.overlaps_with_rectangle(b)
+    print(a.overlaps_with_rectangle(b))
 
 test_cases.close()

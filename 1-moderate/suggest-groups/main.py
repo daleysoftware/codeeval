@@ -31,7 +31,7 @@ def main():
     for user in sorted(user_to_friends.keys()):
         suggested_groups = suggested_groups_for_user(user, user_to_friends, group_to_members)
         if len(suggested_groups) >= 1:
-            print "%s:%s" % (user, ','.join(sorted(suggested_groups)))
+            print("%s:%s" % (user, ','.join(sorted(suggested_groups))))
 
 if __name__ == '__main__':
     main

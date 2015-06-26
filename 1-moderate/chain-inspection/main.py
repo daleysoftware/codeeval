@@ -34,7 +34,7 @@ for test in test_cases:
         node1.next_node = node2
 
     if bad:
-        print 'BAD'
+        print('BAD')
         continue
 
     # Iterate through node mapping objects, marking visited as necessary.
@@ -57,7 +57,7 @@ for test in test_cases:
             break
 
     if bad:
-        print 'BAD'
+        print('BAD')
         continue
 
     # Loop through all the nodes, and make sure they have all been visited.
@@ -67,8 +67,8 @@ for test in test_cases:
             break
 
     if bad:
-        print 'BAD'
+        print('BAD')
     else:
-        print 'GOOD'
+        print('GOOD')
 
 test_cases.close()

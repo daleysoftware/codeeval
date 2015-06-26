@@ -19,7 +19,7 @@ def compute_aromatic_value(aromatic):
     values = []
     for ar in aromatic: values.append(compute_ar_value(ar))
     result = 0
-    for i in xrange(0, len(aromatic)-1):
+    for i in range(0, len(aromatic)-1):
         if compute_ar_value("1" + aromatic[i][1]) < compute_ar_value("1" + aromatic[i+1][1]):
             result -= values[i]
         else:
@@ -31,6 +31,6 @@ for test in test_cases:
     test = test.strip()
     if len(test) == 0:
         continue
-    print compute_aromatic_value([test[i:i+2] for i in range(0, len(test), 2)])
+    print(compute_aromatic_value([test[i:i+2] for i in range(0, len(test), 2)]))
 
 test_cases.close()

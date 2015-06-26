@@ -10,12 +10,12 @@ for test in test_cases:
     if len(test) == 0:
         continue
 
-    streets = map(int, test.split(' ')[0]
+    streets = list(map(int, test.split(' ')[0]
                            .replace('(', '').replace(')', '')
-                           .split(','))
-    avenues = map(int, test.split(' ')[1]
+                           .split(',')))
+    avenues = list(map(int, test.split(' ')[1]
                            .replace('(', '').replace(')', '')
-                           .split(','))
+                           .split(',')))
 
     max_street = streets[-1] # run
     max_avenue = avenues[-1] # rise
@@ -33,6 +33,6 @@ for test in test_cases:
             if is_overlapping(x1, x2, y1/slope, y2/slope):
                 count += 1
 
-    print count
+    print(count)
 
 test_cases.close()

@@ -9,6 +9,6 @@ If you're interested, check out my
 
 Versions unless otherwise stated:
 
-* Python: 3.3 for EASY, 2.7 for MODERATE & HARD (to be converted to 3.3)
+* Python: 3.3 for EASY and MODERATE, 2.7 for HARD (to be converted to 3.3)
 * Java: 1.7
 * G++: 4.7 (C++ 11)
