@@ -58,8 +58,8 @@ def main():
     # Add nodes.
     first_node = None
     last_node = None
-    for x in xrange(0, len(raw_graph)):
-        for y in xrange(0, len(raw_graph[x])):
+    for x in range(0, len(raw_graph)):
+        for y in range(0, len(raw_graph[x])):
             if raw_graph[x][y] == ' ':
                 node = node_name(x, y)
                 last_node = node
@@ -67,8 +67,8 @@ def main():
                 if not first_node:
                     first_node = node
     # Add edges.
-    for x in xrange(1, len(raw_graph)-1):
-        for y in xrange(1, len(raw_graph[x])-1):
+    for x in range(1, len(raw_graph)-1):
+        for y in range(1, len(raw_graph[x])-1):
             if raw_graph[x][y] == ' ':
                 add_edge(raw_graph, graph, x, y)
 
@@ -81,8 +81,8 @@ def main():
         previous = path[previous]
     best_path.add(first_node)
     # Print best path.
-    for x in xrange(0, len(raw_graph)):
-        for y in xrange(0, len(raw_graph[x])):
+    for x in range(0, len(raw_graph)):
+        for y in range(0, len(raw_graph[x])):
             if node_name(x, y) in best_path:
                 sys.stdout.write('+')
             else:

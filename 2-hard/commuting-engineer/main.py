@@ -34,14 +34,14 @@ def _permute_implementation(indexes, result, prefix):
     if len(indexes) == 0:
         result.append(copy.deepcopy(prefix))
         return
-    for i in xrange(len(indexes)):
+    for i in range(len(indexes)):
         prefix.append(indexes[i])
         _permute_implementation(indexes[:i] + indexes[i+1:], result, prefix)
         prefix.pop()
 
 def compute_route_distance(route, points):
     total_distance = 0
-    for i in xrange(1, len(route)):
+    for i in range(1, len(route)):
         p1 = points[route[i-1]]
         p2 = points[route[i]]
         total_distance += p1.distance_to(p2)
@@ -72,7 +72,7 @@ def main():
             best_route = route
 
     # Print the result.
-    print '\n'.join([str(x) for x in best_route])
+    print('\n'.join([str(x) for x in best_route]))
 
 if __name__ == '__main__':
     main()

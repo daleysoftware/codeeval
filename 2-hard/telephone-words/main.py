@@ -30,6 +30,6 @@ for test in test_cases:
     if len(test) == 0:
         continue
 
-    print ",".join(sorted(get_telephone_words(test, "", 0)))
+    print(",".join(sorted(get_telephone_words(test, "", 0))))
 
 test_cases.close()

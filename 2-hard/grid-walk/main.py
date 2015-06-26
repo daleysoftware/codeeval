@@ -21,15 +21,12 @@ def neighbors(p):
 def count_accessible_coordinates():
     visited = {(0, 0)}
     queue = collections.deque([(0, 0)])
-
     while len(queue) > 0:
         p = queue.pop()
-
         for n in neighbors(p):
             if not is_visited(n, visited) and can_visit(n):
                 visited.add(n)
                 queue.append(n)
-
     return len(visited)
 
-print count_accessible_coordinates()
+print(count_accessible_coordinates())

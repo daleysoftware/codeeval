@@ -101,11 +101,11 @@ class Room(object):
     @property
     def _hole(self):
         # Top and bottom rows.
-        for c in xrange(0, ROOM_SIZE):
+        for c in range(0, ROOM_SIZE):
             if self._get_element(Point(0, c)) != Element.WALL: return Point(0, c)
             if self._get_element(Point(ROOM_SIZE-1, c)) != Element.WALL: return Point(ROOM_SIZE-1, c)
         # Sides
-        for r in xrange(1, ROOM_SIZE-1):
+        for r in range(1, ROOM_SIZE-1):
             if self._get_element(Point(r, 0)) != Element.WALL: return Point(r, 0)
             if self._get_element(Point(r, ROOM_SIZE-1)) != Element.WALL: return Point(r, ROOM_SIZE-1)
         # Should never reach here given valid input.
@@ -222,9 +222,9 @@ def main():
         test = test.strip()
         if len(test) == 0: continue
         room = Room([list(t) for t in zip(*[iter(test)]*ROOM_SIZE)])
-        if DEBUG: print '---\n' + str(room)
+        if DEBUG: print('---\n' + str(room))
         room.propagate_light()
-        print room
+        print(room)
     test_cases.close()
 
 if __name__ == '__main__':

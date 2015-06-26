@@ -19,7 +19,7 @@ TEXT_ARRAY = ['Mary', 'had', 'a', 'little', 'lamb', 'its', 'fleece', 'was',
 
 def build_index(text_array, n):
     index = collections.defaultdict(dict)
-    for i in xrange(len(text_array)-n):
+    for i in range(len(text_array)-n):
         key = ' '.join(text_array[i:i+n])
         # Add this word to the index. Keep a word count.
         word = text_array[i+n]
@@ -46,7 +46,7 @@ def main():
             for t in result:
                 p = float(t[1])/total
                 formatted_output.append(t[0] + ',' + ("%.3f" % p))
-            print ';'.join(formatted_output)
+            print(';'.join(formatted_output))
 
 if __name__ == '__main__':
     main()

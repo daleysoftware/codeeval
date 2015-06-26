@@ -70,6 +70,6 @@ for test in test_cases:
     test = re.sub("^0+", "0", test)
     l2 = len(test)
 
-    print count_uglies(test) * (3 ** (l1-l2))
+    print(count_uglies(test) * (3 ** (l1-l2)))
 
 test_cases.close()

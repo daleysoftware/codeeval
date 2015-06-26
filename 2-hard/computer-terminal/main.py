@@ -18,7 +18,7 @@ class Screen:
     @staticmethod
     def _generate_empty_image():
         result = []
-        for i in xrange(0, Screen._SCREEN_ROWS):
+        for i in range(0, Screen._SCREEN_ROWS):
             result.append([' '] * Screen._SCREEN_COLS)
         return result
 
@@ -45,7 +45,7 @@ class Screen:
         self._current_col = min(self._current_col+1, Screen._SCREEN_COLS-1)
 
     def _control_e(self):
-        for i in xrange(self._current_col, Screen._SCREEN_COLS):
+        for i in range(self._current_col, Screen._SCREEN_COLS):
             self._image[self._current_row][i] = ' '
 
     def _control_i(self):
@@ -64,7 +64,7 @@ class Screen:
     def _write(self, char):
         # If we are in insert mode, shift the row over first.
         if not self._in_overwrite_mode:
-            for i in xrange(Screen._SCREEN_COLS-1, self._current_col, -1):
+            for i in range(Screen._SCREEN_COLS-1, self._current_col, -1):
                 self._image[self._current_row][i] = self._image[self._current_row][i-1]
 
         # Write the char in place (for both modes).

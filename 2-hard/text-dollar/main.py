@@ -65,6 +65,6 @@ for test in test_cases:
         continue
 
     n = int(test)
-    print number_to_text(n) + "Dollars"
+    print(number_to_text(n) + "Dollars")
 
 test_cases.close()

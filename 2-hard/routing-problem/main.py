@@ -45,7 +45,7 @@ def find_all_paths(graph, start, end):
 
 def make_mask(n):
     result = 0xffffffff
-    for i in xrange(32-int(n)): result -= (1 << i)
+    for i in range(32-int(n)): result -= (1 << i)
     return result
 
 def dotted_quad_to_num(ip):
@@ -73,10 +73,10 @@ def main():
                            make_mask(ip.split('/')[1])])
         node_to_ips_mapping[node] = new_ips
 
-    for i in xrange(len(nodes)):
+    for i in range(len(nodes)):
         node1 = nodes[i]
         graph.add_node(node1)
-        for j in xrange(i, len(nodes)):
+        for j in range(i, len(nodes)):
             node2 = nodes[j]
             graph.add_node(node2)
             if node1 == node2:
@@ -93,7 +93,7 @@ def main():
         end = int(test.split(' ')[1])
         paths = sorted(find_all_paths(graph, start, end), key=len)
         if len(paths) == 0:
-            print 'No connection'
+            print('No connection')
             continue
         best_length = len(paths[0])
         best_paths = []
@@ -101,7 +101,7 @@ def main():
             if len(path) != best_length:
                 break
             best_paths.append(str(path))
-        print ", ".join(best_paths)
+        print(", ".join(best_paths))
 
     test_cases.close()
 

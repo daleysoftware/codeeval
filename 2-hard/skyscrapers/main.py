@@ -26,7 +26,7 @@ for test in test_cases:
         # Going down!
         note_height(r, 0)
 
-        for i in xrange(l+1, r):
+        for i in range(l+1, r):
             note_height(i, h)
 
     previous_height = 0
@@ -40,6 +40,6 @@ for test in test_cases:
             result.append(str(i))
             result.append(str(height))
 
-    print " ".join(result)
+    print(" ".join(result))
 
 test_cases.close()

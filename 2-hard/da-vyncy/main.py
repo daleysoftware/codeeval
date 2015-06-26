@@ -29,7 +29,7 @@ def compute_max_overlap(s1, s2):
         return compute_max_overlap_cache[key]
 
     max_overlap = 0
-    for i in xrange(1, len(s2)):
+    for i in range(1, len(s2)):
         if s1.endswith(s2[0:i]):
             max_overlap = i
 
@@ -50,8 +50,8 @@ def find_max_overlapping_fragments(fragments):
         else:
             return pair, overlap
 
-    for i in xrange(len(fragments)):
-        for j in xrange(i+1, len(fragments)):
+    for i in range(len(fragments)):
+        for j in range(i+1, len(fragments)):
             for p in [[i, j], [j, i]]:
                 pair, overlap = evaluate_pair(pair, overlap, p,
                     compute_max_overlap(fragments[p[0]], fragments[p[1]]))
@@ -76,6 +76,6 @@ for test in test_cases:
 
     # The fragments list may contain some sub-fragments that have no overlap.
     # Choose the longest element to avoid such sub-fragments.
-    print max(fragments, key=len)
+    print(max(fragments, key=len))
 
 test_cases.close()

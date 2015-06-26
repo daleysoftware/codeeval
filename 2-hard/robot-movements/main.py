@@ -26,4 +26,4 @@ def count_paths(grid, current_x, current_y, end_x, end_y):
 
     return result
 
-print count_paths(grid, 0, 0, 3, 3)
+print(count_paths(grid, 0, 0, 3, 3))

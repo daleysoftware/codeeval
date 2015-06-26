@@ -13,9 +13,9 @@ class FriendGraph:
         return result
 
     def is_friend_cluster(self, s):
-        for i in xrange(len(s)):
+        for i in range(len(s)):
             f1 = s[i]
-            for j in xrange(i+1, len(s)):
+            for j in range(i+1, len(s)):
                 f2 = s[j]
                 if not self.is_a_friends_with_b(f1, f2):
                     return False
@@ -66,7 +66,7 @@ def main():
             b = line[-2].strip()
             fg.add_one_way_interaction(a, b)
 
-        print '\n'.join(sorted([', '.join(sorted(cluster)) for cluster in fg.get_friend_clusters()]))
+        print('\n'.join(sorted([', '.join(sorted(cluster)) for cluster in fg.get_friend_clusters()])))
 
 if __name__ == '__main__':
     main()

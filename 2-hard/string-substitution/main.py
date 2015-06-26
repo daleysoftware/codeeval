@@ -11,7 +11,7 @@ class SearchString:
             return False
 
         match = True
-        for i in xrange(len(s)):
+        for i in range(len(s)):
             if self.array[index + i] != s[i]:
                 match = False
                 break
@@ -19,11 +19,11 @@ class SearchString:
         return match
 
     def find_and_replace(self, s, r):
-        for i in xrange(len(self.array)):
+        for i in range(len(self.array)):
             if self.is_match(s, i):
                 self.array[i] = "x" + r
 
-                for j in xrange(1, len(s)):
+                for j in range(1, len(s)):
                     self.array[i+j] = ""
 
     def render(self):
@@ -38,9 +38,9 @@ for test in test_cases:
     s = SearchString(test.split(';')[0])
     subs = test.split(';')[1].split(',')
 
-    for i in xrange(0, len(subs), 2):
+    for i in range(0, len(subs), 2):
         s.find_and_replace(subs[i], subs[i+1])
 
-    print s.render()
+    print(s.render())
 
 test_cases.close()

@@ -35,7 +35,7 @@ def main():
             new_header = header[:20] + '0000' + src + dst + header[40:]
             checksum = format(compute_checksum(format_data(new_header)), 'x').zfill(4)
             new_header = new_header[:20] + checksum[2:4] + checksum[0:2] + new_header[24:]
-            print ' '.join([new_header[i:i+2] for i in range(0, len(new_header), 2)])
+            print(' '.join([new_header[i:i+2] for i in range(0, len(new_header), 2)]))
 
 if __name__ == '__main__':
     main()

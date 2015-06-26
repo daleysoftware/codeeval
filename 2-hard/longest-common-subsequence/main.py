@@ -10,7 +10,7 @@ def lcs(a, b):
             else:
                 lengths[i+1][j+1] = \
                     max(lengths[i+1][j], lengths[i][j+1])
-    # read the substring out from the matrix
+    # Read the substring out from the matrix.
     result = ""
     x, y = len(a), len(b)
     while x != 0 and y != 0:
@@ -30,10 +30,8 @@ for test in test_cases:
     test = test.strip()
     if len(test) == 0:
         continue
-
     xstr = test.split(';')[0]
     ystr = test.split(';')[1]
-
-    print lcs(xstr, ystr)
+    print(lcs(xstr, ystr))
 
 test_cases.close()

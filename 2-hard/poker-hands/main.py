@@ -210,10 +210,10 @@ for test in test_cases:
     compare = hand1.__cmp__(hand2)
 
     if compare == 0:
-        print 'none'
+        print('none')
     elif compare < 0: # hand1 < hand2, i.e. hand2 is better.
-        print 'right'
+        print('right')
     else:
-        print 'left'
+        print('left')
 
 test_cases.close()

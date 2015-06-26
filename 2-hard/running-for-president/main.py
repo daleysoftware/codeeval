@@ -39,7 +39,7 @@ def get_possibilities_of_length_n(n, prefix=None, result=None):
 
 def possibility_to_strategy(possibility, issues):
     strategy = []
-    for i in xrange(len(issues)):
+    for i in range(len(issues)):
         if possibility[i]: strategy.append(issues[i])
     return strategy
 
@@ -88,7 +88,7 @@ def main():
         data = fh.read().strip().split('\n\n')
         issue_name_to_cost, states  = parse(data)
         result = compute_best_winning_strategy(issue_name_to_cost, states)
-        print '\n'.join(sorted(result))
+        print('\n'.join(sorted(result)))
 
 if __name__ == '__main__':
     main()

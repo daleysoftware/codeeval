@@ -17,16 +17,16 @@ def get_digits(a, n):
     remaining = n - cycle_repeats * len(cycle)
     for c in cycle:
         digits[c] = cycle_repeats
-    for i in xrange(1, remaining+1):
+    for i in range(1, remaining+1):
         digit = cycle[(i-1)%len(cycle)]
         digits[digit] += 1
     return digits
 
 def print_pretty_default_dict(d):
     result = []
-    for i in xrange(0, 10):
+    for i in range(0, 10):
         result.append("%i: %i" % (i, d[i]))
-    print ', '.join(result)
+    print(', '.join(result))
 
 def main():
     test_cases = open(sys.argv[1], 'r')

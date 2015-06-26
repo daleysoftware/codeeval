@@ -1,5 +1,7 @@
 import sys
 
+# TODO finish.
+
 def string_to_time(s):
     s_split = s.split(':')
     return int(s_split[0]) * 3600 + int(s_split[1]) * 60 + int(s_split[2])
@@ -23,13 +25,13 @@ def main():
         start_time = string_to_time(test_split[1])
         rooms_and_times = []
 
-        for i in xrange(2, len(test_split), 2):
+        for i in range(2, len(test_split), 2):
             rooms_and_times.append([test_split[i], int(test_split[i+1])])
 
         # TODO remove this.
-        print agent
-        print start_time
-        print rooms_and_times
+        print(agent)
+        print(start_time)
+        print(rooms_and_times)
 
     test_cases.close()
 

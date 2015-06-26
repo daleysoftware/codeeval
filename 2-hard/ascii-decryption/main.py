@@ -8,15 +8,15 @@ def parse(line):
 
 def array1_equals_array2(array1, array2):
     if len(array1) != len(array2): return False
-    for i in xrange(len(array1)):
+    for i in range(len(array1)):
         if array1[i] != array2[i]: return False
     return True
 
 def find_repeated_elements_in_array_of_length(length, array):
     result = set()
-    for i in xrange(0, len(array)):
+    for i in range(0, len(array)):
         array1 = array[i:i+length]
-        for j in xrange(i+1, len(array)):
+        for j in range(i+1, len(array)):
             array2 = array[j:j+length]
             if array1_equals_array2(array1, array2):
                 result.add(tuple(array1))

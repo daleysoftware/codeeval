@@ -36,9 +36,9 @@ class LineSegment:
                                                      line_segment.p1, line_segment.p2)
 
 def is_intersecting_set(s, intersect):
-    for i in xrange(len(s)):
+    for i in range(len(s)):
         si = s[i]
-        for j in xrange(i+1, len(s)):
+        for j in range(i+1, len(s)):
             sj = s[j]
             if intersect[si][sj]: return True
     return False
@@ -70,10 +70,10 @@ def main():
 
         # Create an array of whether or not a pair of line segments intersect.
         intersect = []
-        for i in xrange(len(line_segments)): intersect.append([False] * len(line_segments))
-        for i in xrange(0, len(line_segments)):
+        for i in range(len(line_segments)): intersect.append([False] * len(line_segments))
+        for i in range(0, len(line_segments)):
             ls1 = line_segments[i]
-            for j in xrange(i+1, len(line_segments)):
+            for j in range(i+1, len(line_segments)):
                 ls2 = line_segments[j]
                 if ls1.intersects_with(ls2):
                     intersect[i][j] = True

@@ -5,12 +5,10 @@ def get_digits_ignore_zero(x):
     for digit in str(x):
         if digit == '0':
             continue
-
         if digit in digits:
             digits[digit] += 1
         else:
             digits[digit] = 1
-
     return digits
 
 def following_integer(x):
@@ -18,7 +16,6 @@ def following_integer(x):
     while True:
         x += 1
         digits = get_digits_ignore_zero(x)
-
         if original_digits == digits:
             return x
 
@@ -27,8 +24,6 @@ for test in test_cases:
     test = test.strip()
     if len(test) == 0:
         continue
-
     test = int(test)
-    print following_integer(test)
-
+    print(following_integer(test))
 test_cases.close()

@@ -4,7 +4,7 @@ import collections
 def distance(s1, s2):
     if len(s1) < len(s2): return distance(s2, s1)
     if len(s2) == 0: return len(s1)
-    previous_row = xrange(len(s2) + 1)
+    previous_row = range(len(s2) + 1)
     for i, c1 in enumerate(s1):
         current_row = [i + 1]
         for j, c2 in enumerate(s2):
@@ -17,7 +17,7 @@ def distance(s1, s2):
 
 def find_matches(dna_segment, dna_sequence, m):
     result = collections.defaultdict(list)
-    for i in xrange(len(dna_sequence)):
+    for i in range(len(dna_sequence)):
         seg = dna_sequence[i:i+len(dna_segment)]
         if len(seg) != len(dna_segment): break
         mismatches = distance(dna_segment, seg)
@@ -39,9 +39,9 @@ def main():
             for mismatches in sorted(result.keys()):
                 for seg in sorted(result[mismatches]):
                     printable.append(seg)
-            print " ".join(printable)
+            print(" ".join(printable))
         else:
-            print 'No match'
+            print('No match')
     test_cases.close()
 
 if __name__ == '__main__':

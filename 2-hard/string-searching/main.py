@@ -22,6 +22,6 @@ for test in test_cases:
     to_search = test.split(",")[0]
     pattern = test.split(",")[1]
 
-    print ('true' if search(to_search, pattern) else 'false')
+    print('true' if search(to_search, pattern) else 'false')
 
 test_cases.close()

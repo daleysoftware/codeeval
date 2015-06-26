@@ -65,6 +65,6 @@ for test in test_cases:
             if not more_to_do:
                 more_to_do = True
 
-    print " ".join(result)
+    print(" ".join(result))
 
 test_cases.close()

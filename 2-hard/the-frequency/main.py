@@ -12,9 +12,9 @@ def zero(data):
     of the signal.
     """
     result = []
-    [m, b] = numpy.polyfit(list(xrange(0, len(data))), data, 1)
+    [m, b] = numpy.polyfit(list(range(0, len(data))), data, 1)
 
-    for i in xrange(0, len(data)):
+    for i in range(0, len(data)):
         result.append(data[i] - m * i + b)
 
     a = sum(result)/len(result)
@@ -30,11 +30,11 @@ def normalize(data, segments):
 
     segment_length = len(data) / segments
 
-    for i in xrange(0, segments):
+    for i in range(0, segments):
         segment = data[i * segment_length : (i+1) * segment_length]
         segment_abs_max = max([abs(s) for s in segment])
 
-        for j in xrange(0, segment_length):
+        for j in range(0, segment_length):
             data[i * segment_length + j] /= segment_abs_max
 
     return data
@@ -44,7 +44,7 @@ def truncate_to_nearest_10(x):
 
 def remove_adjacent_repeated(data):
     result = [data[0]]
-    for i in xrange(1, len(data)):
+    for i in range(1, len(data)):
         if data[i] != data[i-1]:
             result.append(data[i])
     return result
@@ -69,13 +69,13 @@ def determine_frequency(data, max_noise_percentage, sample_interval):
     # Some sneaky logic to make sure that we exclude the little bits at the beginning and end of the
     # signal, so our frequency is as accurate as possible.
     start = 0
-    for i in xrange(0, len(states)-1):
+    for i in range(0, len(states)-1):
         if (states[i] == 0 or states[i] == -1) and states[i+1] == 1:
             start = i
             break
 
     end = len(states)-1
-    for i in xrange(len(states)-1, 0, -1):
+    for i in range(len(states)-1, 0, -1):
         if (states[i-1] == 0 or states[i-1] == -1) and states[i] == 1:
             # Important: trim the end.
             end = i-1
@@ -98,9 +98,9 @@ def main():
         data = zero([float(x) for x in test.split(' ')])
         data = normalize(data, SEGMENTS)
 
-        print determine_frequency(data,
+        print(determine_frequency(data,
                                   max_noise_percentage=MAX_NOISE_PERCENTAGE,
-                                  sample_interval=SAMPLE_INTERVAL)
+                                  sample_interval=SAMPLE_INTERVAL))
     test_cases.close()
 
 if __name__ == '__main__':

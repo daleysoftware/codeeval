@@ -8,7 +8,6 @@ class Matrix:
 
     def count_adjacent_mines(self, row, col):
         result = 0
-
         # Upper row
         result += self.is_mine(row-1, col-1)
         result += self.is_mine(row-1, col)
@@ -21,7 +20,6 @@ class Matrix:
         result += self.is_mine(row, col-1)
         # Right side
         result += self.is_mine(row, col+1)
-
         return result
 
     def is_mine(self, row, col):
@@ -29,22 +27,18 @@ class Matrix:
             return False
         if col < 0 or col >= self.cols:
             return False
-
         return self.array[row][col]
 
 def parse_matrix(line):
     rows = int(line.split(';')[0].split(',')[0])
     cols = int(line.split(';')[0].split(',')[1])
     line = line.split(';')[1].strip()
-
     array = []
     for r in range(rows):
         sub_array = []
         for c in range(cols):
             sub_array.append(True if line[r * cols + c] == '*' else False)
-
         array.append(sub_array)
-
     return Matrix(rows, cols, array)
 
 test_cases = open(sys.argv[1], 'r')
@@ -52,7 +46,6 @@ for test in test_cases:
     test = test.strip()
     if len(test) == 0:
         continue
-
     m = parse_matrix(test)
     result = ""
     for r in range(m.rows):
@@ -61,7 +54,6 @@ for test in test_cases:
                 result += '*'
             else:
                 result += str(m.count_adjacent_mines(r, c))
-
-    print result
+    print(result)
 
 test_cases.close()

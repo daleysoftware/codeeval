@@ -83,8 +83,8 @@ for test in test_cases:
             graph[team_member_id].append(int(desk.strip()))
 
     if len(graph) == len(bipartite_match(graph)[0]):
-        print 'Yes'
+        print('Yes')
     else:
-        print 'No'
+        print('No')
 
 test_cases.close()

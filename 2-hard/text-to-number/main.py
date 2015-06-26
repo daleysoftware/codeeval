@@ -76,8 +76,8 @@ for test in test_cases:
 
     result = millions_to_number(test)
     if negative:
-        print (0-result)
+        print(0-result)
     else:
-        print result
+        print(result)
 
 test_cases.close()
