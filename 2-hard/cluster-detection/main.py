@@ -49,7 +49,8 @@ class FriendGraph:
 
     def get_friend_clusters(self):
         result = []
-        for f in self.interactions.keys():
+        keys = list(self.interactions.keys())
+        for f in keys:
             for cluster in self.get_friend_clusters_for(f):
                 result.append(cluster)
         return FriendGraph._remove_subsets_and_deduplicate(result)
@@ -66,7 +67,8 @@ def main():
             b = line[-2].strip()
             fg.add_one_way_interaction(a, b)
 
-        print('\n'.join(sorted([', '.join(sorted(cluster)) for cluster in fg.get_friend_clusters()])))
+        friend_clusters = fg.get_friend_clusters()
+        print('\n'.join(sorted([', '.join(sorted(cluster)) for cluster in friend_clusters])))
 
 if __name__ == '__main__':
     main()

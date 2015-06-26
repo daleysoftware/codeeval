@@ -45,7 +45,7 @@ def possibility_to_strategy(possibility, issues):
 
 def compute_best_winning_strategy(issue_name_to_cost, states):
     possibilities = get_possibilities_of_length_n(len(issue_name_to_cost))
-    issues = issue_name_to_cost.keys()
+    issues = list(issue_name_to_cost.keys())
 
     best_cost = float('inf')
     best_strategy = []

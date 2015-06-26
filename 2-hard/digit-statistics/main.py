@@ -17,7 +17,7 @@ def get_digits(a, n):
     remaining = n - cycle_repeats * len(cycle)
     for c in cycle:
         digits[c] = cycle_repeats
-    for i in range(1, remaining+1):
+    for i in range(1, int(remaining + 1)):
         digit = cycle[(i-1)%len(cycle)]
         digits[digit] += 1
     return digits

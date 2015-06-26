@@ -38,7 +38,7 @@ def main():
             # Build the index for this n-gram length if we haven't already.
             if n not in indexes: indexes[n] = build_index(TEXT_ARRAY, n)
             # Format the indexed result and print.
-            result = indexes[n][search].items()
+            result = list(indexes[n][search].items())
             total = sum(indexes[n][search].values())
             result.sort(key=lambda tup: tup[0])
             result.sort(key=lambda tup: tup[1], reverse=True)

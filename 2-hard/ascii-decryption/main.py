@@ -4,7 +4,7 @@ import collections
 
 def parse(line):
     split = line.strip().split(' | ')
-    return int(split[0]), split[1], map(int, split[2].split(' '))
+    return int(split[0]), split[1], list(map(int, split[2].split(' ')))
 
 def array1_equals_array2(array1, array2):
     if len(array1) != len(array2): return False
@@ -13,6 +13,7 @@ def array1_equals_array2(array1, array2):
     return True
 
 def find_repeated_elements_in_array_of_length(length, array):
+    print(array)
     result = set()
     for i in range(0, len(array)):
         array1 = array[i:i+length]
@@ -37,7 +38,7 @@ def main():
         for line in fh:
             if len(line.strip()) == 0: continue
             length_repeated_word, last_letter_of_word, encrypted_message = parse(line)
-            print decrypt(length_repeated_word, last_letter_of_word, encrypted_message)
+            print(decrypt(length_repeated_word, last_letter_of_word, encrypted_message))
 
 if __name__ == '__main__':
     main()

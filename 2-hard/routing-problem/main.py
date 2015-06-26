@@ -64,7 +64,7 @@ def main():
     graph_text = test_cases.readline()
     node_to_ips_mapping = ast.literal_eval(graph_text)
     graph = Graph()
-    nodes = node_to_ips_mapping.keys()
+    nodes = list(node_to_ips_mapping.keys())
     for node in nodes:
         ips = node_to_ips_mapping[node]
         new_ips = []

@@ -48,8 +48,8 @@ class Card:
     def __str__(self):
         return str('{0:x}'.format(self.value)) + ":" + str(self.suit)
 
-    def __cmp__(self, other):
-        return self.value - other.value
+    def __lt__(self, other):
+        return self.value < other.value
 
 class PokerHand:
     def __init__(self, cards):

@@ -1,6 +1,8 @@
 import sys
+import math
 
 def number_to_text(n):
+    n = math.floor(n)
     if n < 20:
         return {
             1: "One",
@@ -33,7 +35,7 @@ def number_to_text(n):
             70: "Seventy",
             80: "Eighty",
             90: "Ninety"
-        }[(n/10)*10]
+        }[math.floor(n/10.0)*10]
         if n % 10 != 0:
             result += number_to_text(n % 10)
         return result

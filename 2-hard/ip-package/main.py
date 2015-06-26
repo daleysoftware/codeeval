@@ -4,7 +4,7 @@ import socket
 import struct
 
 def ip_to_hex(ip):
-    return binascii.hexlify(socket.inet_aton(ip))
+    return binascii.hexlify(socket.inet_aton(ip)).decode('utf-8')
 
 def carry_around_add(a, b):
     c = a + b
@@ -12,15 +12,16 @@ def carry_around_add(a, b):
 
 def compute_checksum(data):
     s = 0
-    for i in range(0, len(data), 2):
+    for i in range(0, len(list(data)), 2):
         w = ord(data[i]) + (ord(data[i+1]) << 8)
         s = carry_around_add(s, w)
     return ~s & 0xffff
 
 def format_data(data):
-    data = [data[i:i+2] for i in range(0, len(data), 2)]
-    data = map(lambda x: int(x,16), data)
-    return struct.pack("%dB" % len(data), *data)
+    data = [data[i:i+2] for i in range(0, len(list(data)), 2)]
+    data = map(lambda x: int(x, 16), data)
+    list(data)
+    return struct.pack("%dB" % len(list(data)), *data)
 
 def main():
     with open(sys.argv[1], 'r') as test_cases:

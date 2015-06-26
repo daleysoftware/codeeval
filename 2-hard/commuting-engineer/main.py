@@ -64,7 +64,7 @@ def main():
     # Calculate the best route.
     best_distance = float('inf')
     best_route = []
-    permutations = permute(1, points.keys())
+    permutations = permute(1, list(points.keys()))
     for route in permutations:
         distance = compute_route_distance(route, points)
         if distance < best_distance:

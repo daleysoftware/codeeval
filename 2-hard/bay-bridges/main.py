@@ -81,7 +81,7 @@ def main():
 
         # Print the final result.
         result = find_largest_non_intersecting_set(range(len(line_segments)), intersect)
-        print '\n'.join([str(i+1) for i in result])
+        print('\n'.join([str(i+1) for i in result]))
 
 if __name__ == '__main__':
     main()
