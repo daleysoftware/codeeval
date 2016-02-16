@@ -9,6 +9,7 @@ If you're interested, check out my
 
 Versions unless otherwise stated:
 
-* Python: 3.3
-* Java: 1.7
+* Golang: 1.5
 * G++: 4.7 (C++ 11)
+* Java: 1.7
+* Python: 3.3
