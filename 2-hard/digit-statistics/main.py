@@ -1,6 +1,7 @@
 import sys
 import collections
 
+
 # This is the trick: take advantage of the multiplicative pattern.
 def get_cycle(number):
     cycle = []
@@ -9,6 +10,7 @@ def get_cycle(number):
         cycle.append(current)
         current = (current * number) % 10
     return cycle
+
 
 def get_digits(a, n):
     cycle = get_cycle(a)
@@ -22,11 +24,13 @@ def get_digits(a, n):
         digits[digit] += 1
     return digits
 
+
 def print_pretty_default_dict(d):
     result = []
     for i in range(0, 10):
         result.append("%i: %i" % (i, d[i]))
     print(', '.join(result))
+
 
 def main():
     test_cases = open(sys.argv[1], 'r')

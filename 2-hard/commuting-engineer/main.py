@@ -3,6 +3,7 @@ import math
 import re
 import copy
 
+
 class Point:
     def __init__(self, latitude, longitude):
         self.latitude = latitude
@@ -20,6 +21,7 @@ class Point:
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
         return  6371 * c
 
+
 # Permutation of set s with starting point start.
 def permute(start, indexes):
     prefix = [start]
@@ -27,6 +29,7 @@ def permute(start, indexes):
     result = []
     _permute_implementation(indexes, result, prefix)
     return result
+
 
 def _permute_implementation(indexes, result, prefix):
     if result is None: result = []
@@ -39,6 +42,7 @@ def _permute_implementation(indexes, result, prefix):
         _permute_implementation(indexes[:i] + indexes[i+1:], result, prefix)
         prefix.pop()
 
+
 def compute_route_distance(route, points):
     total_distance = 0
     for i in range(1, len(route)):
@@ -46,6 +50,7 @@ def compute_route_distance(route, points):
         p2 = points[route[i]]
         total_distance += p1.distance_to(p2)
     return total_distance
+
 
 def main():
     # Parse the input to obtain the points of interest.
@@ -73,6 +78,7 @@ def main():
 
     # Print the result.
     print('\n'.join([str(x) for x in best_route]))
+
 
 if __name__ == '__main__':
     main()
