@@ -4,8 +4,15 @@
 *.vpw
 *.vpwhistu
 *.vtg
+*.cbp
+*.cmake
+cmake-build-debug
+CMakeFiles
+CMakeCache.txt
 .cproject
 .project
 a.out
 Debug
 .c9
+Makefile
+bin
