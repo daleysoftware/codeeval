@@ -28,7 +28,7 @@ public class BeautifulStrings
      *
      * Overall runtime: O(n*ln(n)).
      */
-    public static int findMaxBeautyOfString(String str)
+    private static int findMaxBeautyOfString(String str)
     {
         HashMap<Character, Integer> map = new HashMap<Character, Integer>();
 
@@ -63,13 +63,13 @@ public class BeautifulStrings
     }
 
     /**
-     * Implementation adapter from stack overflow:
+     * Implementation adapted from stack overflow:
      * http://stackoverflow.com/questions/109383/how-to-sort-a-mapkey-value-on-the-values-in-java
      */
     private static class ValueComparator implements Comparator<Character>
     {
         Map<Character, Integer> _base;
-        public ValueComparator(Map<Character, Integer> base)
+        private ValueComparator(Map<Character, Integer> base)
         {
             _base = base;
         }
