@@ -46,6 +46,9 @@ add_executable(sum-of-integers ${SUM_OF_INTEGERS})
 set (SUM_OF_PRIMES 0-easy/sum-of-primes/main.cpp)
 add_executable(sum-of-primes ${SUM_OF_PRIMES})
 
+set (UNIQUE_ELEMENTS 0-easy/unique-elements/main.cpp)
+add_executable(unique-elements ${UNIQUE_ELEMENTS})
+
 set (CONSECUTIVE_PRIMES 1-moderate/consecutive-primes/main.cpp)
 add_executable(consecutive-primes ${CONSECUTIVE_PRIMES})
 
