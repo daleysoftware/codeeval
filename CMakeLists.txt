@@ -70,6 +70,9 @@ add_executable(reverse-and-add ${REVERSE_AND_ADD})
 set (TO_PI_OR_NOT_TO_PI 1-moderate/to-pi-or-not-to-pi/main.cpp)
 add_executable(to-pi-or-not-to-pi ${TO_PI_OR_NOT_TO_PI})
 
+set (TRY_TO_SOLVE_IT 1-moderate/try-to-solve-it/main.cpp)
+add_executable(try-to-solve-it ${TRY_TO_SOLVE_IT})
+
 set (COMMUTING_ENGINEER 2-hard/commuting-engineer/main.cpp)
 add_executable(commuting-engineer ${COMMUTING_ENGINEER})
 
