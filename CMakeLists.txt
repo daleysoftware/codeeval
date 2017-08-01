@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.4)
 project(codeeval_cpp)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -48,6 +48,9 @@ add_executable(sum-of-primes ${SUM_OF_PRIMES})
 
 set (UNIQUE_ELEMENTS 0-easy/unique-elements/main.cpp)
 add_executable(unique-elements ${UNIQUE_ELEMENTS})
+
+set (COLUMN_NAMES 1-moderate/column-names/main.cpp)
+add_executable(column-names ${COLUMN_NAMES})
 
 set (CONSECUTIVE_PRIMES 1-moderate/consecutive-primes/main.cpp)
 add_executable(consecutive-primes ${CONSECUTIVE_PRIMES})
