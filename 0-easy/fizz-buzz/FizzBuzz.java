@@ -25,7 +25,7 @@ public class FizzBuzz
         }
     }
 
-    public static void doFizzBuzz(int a, int b, int n)
+    private static void doFizzBuzz(int a, int b, int n)
     {
         for (int i = 1; i <= n; i++) {
 
@@ -48,7 +48,7 @@ public class FizzBuzz
         }
     }
 
-    public static boolean isNDivisibleByX(int n, int x)
+    private static boolean isNDivisibleByX(int n, int x)
     {
         return n % x == 0;
     }

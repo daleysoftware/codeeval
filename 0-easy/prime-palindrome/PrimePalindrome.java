@@ -14,7 +14,7 @@ public class PrimePalindrome
         System.out.println(largestPrimePalindrome);
     }
 
-    public static boolean isPrime(int n)
+    private static boolean isPrime(int n)
     {
         int root = (int) Math.sqrt(n);
 
@@ -27,13 +27,13 @@ public class PrimePalindrome
         return true;
     }
 
-    public static boolean isPalindrome(int n)
+    private static boolean isPalindrome(int n)
     {
         String str = Integer.toString(n);
         return isPalindrome(str);
     }
 
-    public static boolean isPalindrome(String str)
+    private static boolean isPalindrome(String str)
     {
         char[] array = str.toCharArray();
 

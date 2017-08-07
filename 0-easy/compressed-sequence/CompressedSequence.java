@@ -24,7 +24,7 @@ public class CompressedSequence
         }
     }
 
-    public static void printCompressedArray(int[] input)
+    private static void printCompressedArray(int[] input)
     {
         if (input.length == 0) {
             return;
