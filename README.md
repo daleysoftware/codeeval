@@ -1,9 +1,6 @@
 # CodeEval
 
-Selected <a href="http://codeeval.com">CodeEval</a> solutions. Do not read my
-solutions if you are a CodeEval participant! That would just ruin all the fun.
-If you're interested, check out my
-<a href="https://www.codeeval.com/profile/mpillar/">public profile</a>.
+Selected <a href="http://codeeval.com">CodeEval</a> solutions. Sadly, CodeEval is no longer operational. It was fun while it lasted!
 
 ## Development Notes
 
